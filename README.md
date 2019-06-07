@@ -1,6 +1,3 @@
-<<<<<<< 705379043e1802258ff54e0a7ff708ab489356cc
-# HbbggTraining
-=======
 # HHbbggTraining
 ## Getting the code
 Fork to your directory the code here: https://github.com/ivovtin/HbbggTraining<br />
@@ -10,13 +7,13 @@ You should create your own branch, then do pull requests when you are done. <br 
 
 ## Training, optimization of MVAs and ntuple production
 - Start jupyter: <br />
-cd notebooks/; <br />
-jupyter notebook; <br />
+cd notebooks/ <br />
+jupyter notebook <br />
 
 The code is organized in notebooks, the programs you execute directly in the browser. They
 are in the "notebooks" folder. <br />
 
-- Training/notebooks <br />
+- HHbbggTraining/notebooks <br />
 This folder contains all the notebooks needed <br />
 -- trainMVAHHbbgg.ipynb  <br />
 Trains a Gradient Boost Classifier to separate signal/backgrounds. All re-weighting implemented, output saved. <br />
@@ -27,9 +24,30 @@ Optimize parameters of the classifier. In Training/scropts/optimizeClassifier.py
 of this optimization code wich runs without using notebooks. 
 
 
-- Training/python/<br />
+- HHbbggTraining/python/<br />
 This folder contains all the tools needed by the notebooks:
 data format, train/test splitting, plotting...
 These classes have to be loaded at the beginning of your notebook.
 
->>>>>>> First commit
+- HHbbggTraining/scripts/<br />
+- prepare_data.C <br />
+The preparation Root-trees with cuts.
+- draw_input_var.C <br />
+Get distribution input variables use in training.
+- ROC_plots.py <br />
+Draw ROCs curves from .dat files.
+- transformMVAOutput.py <br />
+    Computes the cumulative of MVA output distribution for SM signal and uses that to transform the MVA output. It saves it in a new branch called MVAOutputTransformed in a new file in the same directory of the input file called Total_preselection_diffNaming_transformedMVA.root
+    Example:
+
+python transformMVAOutput.py -i Total_preselection_diffNaming.root 
+
+- job.sh <br />
+Optimize parameters of the classifier with lxplus on HTCondor.
+
+- transformMVAOutput.py  <br />
+Training for lxplus.
+
+
+
+
