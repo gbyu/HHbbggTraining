@@ -37,15 +37,17 @@ Get distribution input variables use in training.
 - ROC_plots.py <br />
 Draw ROCs curves from .dat files.
 - transformMVAOutput.py <br />
-    Computes the cumulative of MVA output distribution for SM signal and uses that to transform the MVA output. It saves it in a new branch called MVAOutputTransformed in a new file in the same directory of the input file called Total_preselection_diffNaming_transformedMVA.root
-    Example:
+   Computes the cumulative of MVA output distribution for SM signal and uses that to transform the MVA output. It saves it in a new branch called MVAOutputTransformed in a new file in the same directory of the input file called Total_preselection_diffNaming_transformedMVA.root
+   Example:
+   python transformMVAOutput.py -i Total_preselection_diffNaming.root 
 
-python transformMVAOutput.py -i Total_preselection_diffNaming.root 
+- add_branch_res.C <br />
+  Adding new branch with MVAOutputTransformed to input Trees.
 
 - job.sh <br />
 Optimize parameters of the classifier with lxplus on HTCondor.
 
-- transformMVAOutput.py  <br />
+- trainMVAHHbbgg_v2.py <br />
 Training for lxplus.
 
 
