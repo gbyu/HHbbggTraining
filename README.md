@@ -2,7 +2,7 @@
 ## Getting the code
 Fork to your directory the code here: https://github.com/ivovtin/HbbggTraining<br />
 Clone it locally:<br />
-git clone git@github.com:[YOURNAME]/HbbggTraining.git HbbggTraining <br />
+git clone https://github.com/[YOURNAME]/HHbbggTraining <br />
 You should create your own branch, then do pull requests when you are done. <br />
 
 ## Training, optimization of MVAs and ntuple production
