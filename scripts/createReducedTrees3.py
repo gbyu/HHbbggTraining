@@ -33,8 +33,6 @@ VH = [s for s in files if "output_VHToGG_" in s]
 bbH = [s for s in files if "output_bbHToGG_M-125_4FS_yb2" in s] #is this correct?
 ttH = [s for s in files if "output_ttHToGG_" in s]
 vbf2 = [s for s in files if "output_VBFHToGG_M125_13TeV_amcatnlo_pythia8_st_cuts" in s]
-gJets_lowPtdiff = [s for s in files if "output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8_st_cuts" in s]
-gJets_highPtdiff = [s for s in files if "output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8_st_cut" in s]
 
 Data= [s for s in files if "DoubleEG_2017_st_cuts" in s]
 
@@ -49,8 +47,6 @@ utils.IO.add_background(ntuples,VH,-5)
 utils.IO.add_background(ntuples,bbH,-6)
 utils.IO.add_background(ntuples,ttH,-7)
 utils.IO.add_background(ntuples,vbf2,-8)
-utils.IO.add_background(ntuples,gJets_lowPtdiff,-9)
-utils.IO.add_background(ntuples,gJets_highPtdiff,-10)
 
 nBkg = len(utils.IO.backgroundName)
 print nBkg
@@ -197,10 +193,10 @@ for iProcess in range(0,len(utils.IO.backgroundName)):
 
     nTot,dictVar = postprocessing.stackFeatures(bkg_count_df,branch_names+additionalCut_names)
 
-    processPath=os.path.expanduser('/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/')+outTag+'/'+utils.IO.backgroundName[iProcess].split("/")[len(utils.IO.backgroundName[9].split("/"))-1].replace("output_","").replace(".root","")+"_preselection"+".root"
+    processPath=os.path.expanduser('/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/')+outTag+'/'+utils.IO.backgroundName[iProcess].split("/")[len(utils.IO.backgroundName[7].split("/"))-1].replace("output_","").replace(".root","")+"_preselection"+".root"
     postprocessing.saveTree(processPath,dictVar,nTot,Y_pred_bkg[iSample])    
 
-    processPath=os.path.expanduser('/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/')+outTag+'/'+utils.IO.backgroundName[iProcess].split("/")[len(utils.IO.backgroundName[9].split("/"))-1].replace("output_","").replace(".root","")+"_preselection_diffNaming"+".root"
+    processPath=os.path.expanduser('/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/')+outTag+'/'+utils.IO.backgroundName[iProcess].split("/")[len(utils.IO.backgroundName[7].split("/"))-1].replace("output_","").replace(".root","")+"_preselection_diffNaming"+".root"
     if "GluGluToHHTo2B2G_node_SM_13TeV_madgraph_13TeV_DoubleHTag_0"in processPath:
         treeName = "reducedTree_sig_node_"+str(iProcess-6)
     else:
