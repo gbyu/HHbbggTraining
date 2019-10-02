@@ -1,8 +1,41 @@
 from sklearn import model_selection
+from sklearn import datasets
 from sklearn.model_selection import train_test_split
 import pandas as pd
 import training_utils as utils
 import optimization_utils as plotting
+import time
+import datetime
+import os
+start_time = time.time()       
+ 
+def setupJoblib(ipp_profile='default'):
+    #Method to set ipyparallel backend to a running ipcluster
+    #Arguments-  ipp_profile : string, Name of ipcluster profile for the started ipcluster that will be set up      
+    from sklearn.externals.joblib import Parallel, parallel_backend, register_parallel_backend
+
+    import ipyparallel as ipp
+    #import ipyrad as ip
+    import zmq
+    #os.system("source /afs/cern.ch/user/i/ivovtin/HHggbb/HHbbgg_ETH/Training/scripts/env.sh") 
+    from ipyparallel import Client
+    from ipyparallel.joblib import IPythonParallelBackend
+    global joblib_rc,joblib_view,joblib_be
+    # The Client allows us to use the engines interactively.
+    # We pass Client the name of the cluster profile we are using.
+    #joblib_rc = ipp.Client(profile=ipp_profile)
+    joblib_rc = ipp.Client(profile=ipp_profile,debug=True)
+    #joblib_rc = ipp.Client(profile=ipp_profile,timeout=20,debug=True)
+    #joblib_rc = ipp.Client(profile=ipp_profile,context=zmq.Context())
+    #joblib_rc = ipp.Client(profile=ipp_profile,sshserver='ivovtin@lxplus709.cern.ch')
+    # print how many engines are connected
+    print(len(joblib_rc), 'cores')
+    print(joblib_rc.ids, 'joblib_rc') 
+    ## or, use ipyrad to print cluster info
+    ##ip.cluster_info(joblib_rc)
+    joblib_view = joblib_rc.load_balanced_view()
+    joblib_be = IPythonParallelBackend(view=joblib_view)
+    register_parallel_backend('ipyparallel',lambda: joblib_be,make_default=True)
     
 def optimize_parameters_gridCV(classifier,X_total_train,y_total_train,param_grid,cvOpt=3,nJobs=10):
     print "=====Optimization with grid search cv====="
@@ -89,7 +122,35 @@ def optimize_parameters_randomizedCV(classifier,X_total_train,y_total_train,para
     print 'the best_score  : ', clf.best_score_
     for k,v in clf.best_params_.items():
         param_grid[k] = v
-        
-    df.to_csv(utils.IO.plotFolder+'xgb-RandomizedSearchCV-results-01.csv', index=False)                
-    
+ 
+    now = str(datetime.datetime.now()).split(' ')[0]
+    outstr = "%s_optimization_job"%now
+    outputFolder = '/eos/user/i/ivovtin/HHggbb/HHbbggTraining/Training/output_files/%s/'%outstr
+#    df.to_csv(outputFolder+'RandomizedSearchCV-best_parameters.txt', index=False)                
+   
+    writeInFile=outputFolder+'best_parameters_%s.txt'%outstr
+    if writeInFile!=None:
+        print writeInFile
+#        outFile = open(writeInFile,"w")
+        outFile = open(writeInFile,"a+")
+        outFile.write("Best parameter set found on development set:\n")
+    	outFile.write("%s\n"%clf.best_estimator_)
+    	outFile.write("Grid scores on a subset of the development set:\n")   
+        outFile.write("%s\n"%(df)) 
+        outFile.write("the best_params:\n")
+        outFile.write("%s\n"%(clf.best_params_))  
+        outFile.write("the best_score:\n")
+        outFile.write("%s\n"%(clf.best_score_))   
+        outFile.write("Time in seconds:\n")
+        outFile.write("%s\n"%(time.time()-start_time))   
+        outFile.close()   
+   
+    writeInFile2=outputFolder+'results_%s.txt'%outstr
+    if writeInFile2!=None:
+        print writeInFile2
+#        outFile2 = open(writeInFile2,"w")
+        outFile2 = open(writeInFile2,"a+")
+        outFile2.write("%s\n"%(clf.best_score_))
+        outFile2.close()
+
     return clf.cv_results_
