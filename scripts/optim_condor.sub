@@ -7,8 +7,9 @@ executable = job.sh
 #Any arguments that are to be passed to the executable
 arguments = $(ClusterId)$(ProcId)
 RequestCpus = 8
-#RequestCpus = 30
-#RequestCpus = 200
+#RequestCpus = 16
+#RequestCpus = 24
+#RequestCpus = 46
 # espresso     = 20 minutes  - default!
 # microcentury = 1 hour
 # longlunch    = 2 hours
@@ -17,15 +18,18 @@ RequestCpus = 8
 # testmatch    = 3 days
 # nextweek     = 1 week
 #+JobFlavour = "tomorrow"
-+JobFlavour = "testmatch"
+#+JobFlavour = "testmatch"
++JobFlavour = "nextweek"
 #By default this the time corresponding to the espresso JobFlavour. The maximum is 1 week, or 604800 seconds.
 #+MaxRuntime = 604800
 #1 days 
-#+MaxRuntime = 86400 
++MaxRuntime = 86400 
 ##2 days 
 #+MaxRuntime = 172800 
 #3 days 
-+MaxRuntime = 259200 
+#+MaxRuntime = 259200 
+#8 days 
+#+MaxRuntime = 691200 
 #+MaxRuntime = 7200 
 #+MaxRuntime = 21600 
 #Where the STDOUT of the executable is written. This can be a relative or absolute path. HTCondor will not create the directory and hence an error will occur if the specified directory does not exist. 
@@ -39,8 +43,9 @@ when_to_transfer_output = ON_EXIT
 #transfer_output_files = /afs/cern.ch/user/i/ivovtin/HHggbb/HHbbgg_ETH/Training/scripts/res.dat
 #transfer_output_files = res.dat
 transfer_output = True
-transfer_input_files = optimizeClassifier.py
+transfer_input_files = /afs/cern.ch/user/i/ivovtin/HHggbb/HHbbgg_ETH/Training/scripts/optimizeClassifier.py
 #+JobFlavour = "espresso"
 #This command submits the job
-queue
+#queue
+queue 1000
 

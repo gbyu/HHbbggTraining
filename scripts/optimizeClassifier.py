@@ -1,5 +1,4 @@
 import os
-#import sys; sys.path.append("~/HHbbgg_ETH_devel/Training/python") # to load packages
 import sys; sys.path.append("/afs/cern.ch/user/i/ivovtin/HHggbb/HHbbgg_ETH/Training/python") # to load packages
 import training_utils as utils
 import numpy as np
@@ -10,6 +9,16 @@ reload(preprocessing)
 #reload(plotting)
 import postprocessing_utils as postprocessing
 reload(postprocessing)
+import time
+import datetime
+start_time = time.time()
+
+#now = str(datetime.datetime.now()).split(' ')[0]
+#outstr = "%s_optimization_job"%now
+#outputFolder = '/eos/user/i/ivovtin/HHggbb/HHbbggTraining/Training/output_files/%s/'%outstr
+#if not os.path.exists(outputFolder):
+#    print outputFolder, "doesn't exist, creating it..."
+#    os.makedirs(outputFolder)
 
 ntuples = '2017/flattrees_st_cuts'
 # "%" sign allows to interpret the rest as a system command
@@ -80,119 +89,47 @@ X_total_test = preprocessing.get_total_test_sample(X_sig,X_bkg)
 w_total_train = preprocessing.get_total_training_sample(weights_sig,weights_bkg).ravel()
 w_total_test = preprocessing.get_total_test_sample(weights_sig,weights_bkg).ravel()
 
+from sklearn.externals import joblib
+
 import xgboost as xgb
-clf = xgb.XGBClassifier(max_depth=4,learning_rate=0.2,n_estimators=50, min_child_weight=1e-5, nthread= 20)
 #clf = xgb.XGBClassifier(base_score=0.5, colsample_bylevel=1, colsample_bytree=1,
-#       gamma=0, learning_rate=0.1, max_delta_step=0, max_depth=3, min_child_weight=1e-05, missing=None, n_estimators=1000, nthread=12,
-#       objective='binary:logistic', reg_alpha=0, reg_lambda=0.01,
+#       gamma=0, learning_rate=0.1, max_delta_step=0, max_depth=5,
+#       min_child_weight=1e-05, missing=None, n_estimators=1500, nthread=1,#4 the same as in the engine scipt smp 4
+#       objective='binary:logistic', reg_alpha=0, reg_lambda=0.1,
 #       scale_pos_weight=1, seed=0, silent=True, subsample=1)
+
+clf = xgb.XGBClassifier(base_score=0.5, colsample_bylevel=1, colsample_bytree=1,
+       gamma=0, learning_rate=0.1, max_delta_step=0, max_depth=3,
+       min_child_weight=1e-05, missing=None, n_estimators=1000, nthread=8,#4 the same as in the engine scipt smp 4
+       objective='binary:logistic', reg_alpha=0, reg_lambda=0.1,
+       scale_pos_weight=1, seed=0, silent=True, subsample=1)
+
 
 import optimization_utils as optimization
 reload(optimization)
 #param_grid = {
-#              'n_estimators': [1000,1500,2000],
+#              'n_estimators': [20,40,50],
 #              'learning_rate': [0.1,0.2,1.],    
-#              'max_depth': [3,5,8]
+#              'max_depth': [3,4]
 #              }
-#1
-#param_grid = {
-#              'n_estimators': [1000,1500,2000],
-#              'learning_rate': [0.1, 0.2,0.5,1.],    
-#              'max_depth': [3,5,6,8,10],
-#              'reg_alpha':[0,1e-5, 0.01, 0.05, 0.1, 1],
-#              'reg_lambda':[0,1e-5, 0.01,0.05, 0.1, 1],
-#              'min_child_weight':[1e-5, 1e-4, 1e-3]
-#              }
-#2
-#param_grid = {
-#              'n_estimators': [1000,1500,2000],
-#              'learning_rate': [0.1, 0.2,1.],    
-#              'max_depth': [3,5,8,10],
-#              'reg_alpha':[0,1e-5, 0.01, 0.1, 1],
-#              'reg_lambda':[0,1e-5, 0.01, 0.1, 1],
-#              'min_child_weight':[1e-5, 1e-4]
-#              }
-#3
-#param_grid = {
-#              'n_estimators': [500,800,900],
-#              'learning_rate': [0.1, 0.2,1.],    
-#              'max_depth': [3,5,8,10],
-#              'reg_alpha':[0,1e-5, 0.01, 0.1, 1],
-#              'reg_lambda':[0,1e-5, 0.01, 0.1, 1]
-#              }
-#4
-#param_grid = {
-#              'n_estimators': [1000,1500,2000],
-#              'learning_rate': [0.1, 0.5,1.],    
-#              'max_depth': [4,6,8,10],
-#              'reg_alpha':[0, 0.01, 0.1, 1],
-#              'reg_lambda':[0, 0.01, 0.1, 1]
-#              }
-#5, 6, 7, 8, 9
-param_grid = {
-              'n_estimators': [1000,1500,2000],
-              'learning_rate': [0.1, 0.2,1.],    
-              'max_depth': [3,5,8,10],
-              'reg_alpha':[0,1e-5, 0.01, 0.1, 1],
-              'reg_lambda':[0,1e-5, 0.01, 0.1, 1],
-              'min_child_weight':[1e-5, 1e-4]
-              }
-#10
-#param_grid = {
-#              'n_estimators': [1000,1500,2000],
-#              'learning_rate': [0.1, 0.2,1.],    
-#              'max_depth': [3,5,8,10]
-#              }
-#param_grid = {"n_estimators": [60,80],
-#              "max_depth": [3,4]                                                                                                                                                   }              
+#all
+param_grid = {'n_estimators': [500,1000,1500,2000],
+              'max_depth': [3,5,8,10], 
+              'gamma' : [0,0.15,0.3], 
+              'learning_rate': [0.01,0.1, 0.2,0.3],    
+              'reg_alpha':[0., 0.01, 0.1],
+              'reg_lambda':[1e-2, 5e-2, 0.1, 0.3],
+              'min_child_weight':[1e-06,1e-05,1e-04]
+	     }
+
+#optimization.setupJoblib("ivovtin")
+
 #optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=5,nIter=500,nJobs=8)
-#3.68 h
-#optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=3,nIter=10)
-#5.2 h
-#optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=3,nIter=10,nJobs=30)
-#7.5 h
-#optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=4,nIter=10,nJobs=10)
-#13.6 h
-#optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=5,nIter=10,nJobs=10)
-#+ max_depth -6  + reg_alpha' 0 + reg_lambda 0 + learning_rate 0.5
-#optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=5,nIter=30,nJobs=10)
-#optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=5,nIter=50,nJobs=10)
-#+min_child_weight
-#optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=5,nIter=100,nJobs=10)
-#1 ->6 out
-#optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=3,nIter=10,nJobs=10)
-#2 ->7 out
-#optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=3,nIter=10,nJobs=10)
-#3 ->8 out
-#optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=3,nIter=10,nJobs=10)
-#4 ->9 out
-#optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=3,nIter=10,nJobs=10)
-#5 ->10 out
-#optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=4,nIter=10,nJobs=10)
-#6 ->11 out
-#optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=5,nIter=10,nJobs=10)
-#7 ->12 out
-#optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=3,nIter=30,nJobs=10)
-#8 ->13 out
-#optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=3,nIter=50,nJobs=10)
-#9 ->14 out
-#optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=3,nIter=10,nJobs=10)
-#10 ->15 out
-#optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=3,nIter=10,nJobs=10)
-#9 ->16 out
-#optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=3,nIter=30,nJobs=10)
-#9 ->17 out
-#optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=3,nIter=100,nJobs=20)
-#9 ->18 out
-optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=3,nIter=200,nJobs=40)
+#all
+#clf = optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=3,nIter=200,nJobs=23)
+clf = optimization.optimize_parameters_randomizedCV(clf,X_total_train,y_total_train,param_grid,cvOpt=5,nIter=1,nJobs=8)
 #
 
-
-
-
-
-
-
-
+print 'It took', time.time()-start_time, 'seconds.'
 
 
