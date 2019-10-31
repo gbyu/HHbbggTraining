@@ -17,7 +17,6 @@ def stackFeatures(df,additionalCut_names,rounding=6,SF=1,isData=0):
         vec.append(np.multiply(np.asarray(df['weight']),SF))  
     else:
         w = (np.ones_like(utils.IO.data_df[0].index)).astype(np.int8)
-        #vec.append(np.multiply(w,df['isSignal']))
         vec.append(np.multiply(w,1))
     dictVar['weight'] = i
         
@@ -70,8 +69,6 @@ def saveTree(processPath,dictVar,vector,MVAVector=None,SF=1,nameTree="reducedTre
              name = 'Mgg'
          elif key == 'dijetCandidate.M()':
              name = 'Mjj'
-         #elif key == 'HHTagger2017':
-         #    name = 'MVAOutput'
 
          if SF != 1:
              if key == 'weight':

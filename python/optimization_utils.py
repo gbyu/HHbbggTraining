@@ -9,34 +9,6 @@ import datetime
 import os
 start_time = time.time()       
  
-def setupJoblib(ipp_profile='default'):
-    #Method to set ipyparallel backend to a running ipcluster
-    #Arguments-  ipp_profile : string, Name of ipcluster profile for the started ipcluster that will be set up      
-    from sklearn.externals.joblib import Parallel, parallel_backend, register_parallel_backend
-
-    import ipyparallel as ipp
-    #import ipyrad as ip
-    import zmq
-    #os.system("source /afs/cern.ch/user/i/ivovtin/HHggbb/HHbbgg_ETH/Training/scripts/env.sh") 
-    from ipyparallel import Client
-    from ipyparallel.joblib import IPythonParallelBackend
-    global joblib_rc,joblib_view,joblib_be
-    # The Client allows us to use the engines interactively.
-    # We pass Client the name of the cluster profile we are using.
-    #joblib_rc = ipp.Client(profile=ipp_profile)
-    joblib_rc = ipp.Client(profile=ipp_profile,debug=True)
-    #joblib_rc = ipp.Client(profile=ipp_profile,timeout=20,debug=True)
-    #joblib_rc = ipp.Client(profile=ipp_profile,context=zmq.Context())
-    #joblib_rc = ipp.Client(profile=ipp_profile,sshserver='ivovtin@lxplus709.cern.ch')
-    # print how many engines are connected
-    print(len(joblib_rc), 'cores')
-    print(joblib_rc.ids, 'joblib_rc') 
-    ## or, use ipyrad to print cluster info
-    ##ip.cluster_info(joblib_rc)
-    joblib_view = joblib_rc.load_balanced_view()
-    joblib_be = IPythonParallelBackend(view=joblib_view)
-    register_parallel_backend('ipyparallel',lambda: joblib_be,make_default=True)
-    
 def optimize_parameters_gridCV(classifier,X_total_train,y_total_train,param_grid,cvOpt=3,nJobs=10):
     print "=====Optimization with grid search cv====="
     scores = model_selection.cross_val_score(classifier,

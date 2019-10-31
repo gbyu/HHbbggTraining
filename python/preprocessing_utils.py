@@ -1,3 +1,4 @@
+import sys; sys.path.append("/afs/cern.ch/user/i/ivovtin/HHggbb/HHbbggTraining/python")
 import training_utils as utils
 import os
 import numpy as np
@@ -8,28 +9,10 @@ import postprocessing_utils as postprocessing
 def define_process_weight(df,proc,name,cleanSignal=True):
     df['proc'] = ( np.ones_like(df.index)*proc ).astype(np.int8)
     df['weight'] = ( np.ones_like(df.index)).astype(np.float32)
-#    input_df=rpd.read_root(name,"bbggSelectionTree", columns = ['genTotalWeight', 'lumiFactor','isSignal','puweight'])
-#    w = np.multiply(input_df[['lumiFactor']],input_df[['genTotalWeight']])
-#    w = np.multiply(w,input_df[['puweight']])
-#    df['lumiFactor'] = input_df[['lumiFactor']]
-#    df['genTotalWeight'] = input_df[['genTotalWeight']]
-#    df['isSignal'] = input_df[['isSignal']]
-#     if cleanSignal:#some trees include also the control region,select only good events
-#        df['weight']= np.multiply(w,input_df[['isSignal']])
-#    else:
-#        df['weight']=w
+    input_df=rpd.read_root(name,"bbggSelectionTree", columns = ['puweight'])
+    #w = np.multiply(1,input_df[['puweight']])
+    #df['weight']=w
 
-
-
-def define_process_weight_CR(df,proc,name):
-    df['proc'] = ( np.ones_like(df.index)*proc ).astype(np.int8)
-    df['weight'] = ( np.ones_like(df.index)).astype(np.float32)
-#    input_df=rpd.read_root(name,"bbggSelectionTree", columns = ['isPhotonCR'])
-#    input_df=rpd.read_root(name,'tagsDumper/trees/GluGluToHHTo2B2G_nodesPlusSM_13TeV_madgraph_13TeV_DoubleHTag_0', columns = ['isPhotonCR'])
-#    w = input_df[['isPhotonCR']]
-#    df['weight']=w
-
- 
 def clean_signal_events(x_b, y_b, w_b,x_s,y_s,w_s):#some trees include also the control region,select only good events
     return x_b[np.where(w_b!=0),:][0],y_b[np.where(w_b!=0)],w_b[np.where(w_b!=0)], x_s[np.where(w_s!=0),:][0], np.asarray(y_s)[np.where(w_s!=0)],np.asarray(w_s)[np.where(w_s!=0)]
 
@@ -147,6 +130,7 @@ def get_test_sample(x,splitting=0.5):
 
     
 def get_total_training_sample(x_sig,x_bkg,splitting=0.5):
+#def get_total_training_sample(x_sig,x_bkg,splitting=0.20):
     x_s=pd.DataFrame(x_sig)
     x_b=pd.DataFrame(x_bkg)
     halfSample_s = int((x_s.size/len(x_s.columns))*splitting)
@@ -155,6 +139,7 @@ def get_total_training_sample(x_sig,x_bkg,splitting=0.5):
 
     
 def get_total_test_sample(x_sig,x_bkg,splitting=0.5):
+#def get_total_test_sample(x_sig,x_bkg,splitting=0.20):
     x_s=pd.DataFrame(x_sig)
     x_b=pd.DataFrame(x_bkg)
     halfSample_s = int((x_s.size/len(x_s.columns))*splitting)
@@ -171,9 +156,6 @@ def set_signals(treeName,branch_names,shuffle):
         if shuffle:
             utils.IO.signal_df[i]['random_index'] = np.random.permutation(range(utils.IO.signal_df[i].index.size))
             utils.IO.signal_df[i].sort_values(by='random_index',inplace=True)
-
-#         adjust_and_compress(utils.IO.signal_df[i]).to_hdf('/tmp/micheli/signal.hd5','sig',compression=9,complib='bzip2',mode='a')
-
        
 
 def set_backgrounds(treeName,branch_names,shuffle):
@@ -184,28 +166,11 @@ def set_backgrounds(treeName,branch_names,shuffle):
             utils.IO.background_df[i]['random_index'] = np.random.permutation(range(utils.IO.background_df[i].index.size))
             utils.IO.background_df[i].sort_values(by='random_index',inplace=True)
 
-#         adjust_and_compress(utils.IO.background_df[i]).to_hdf('/tmp/micheli/background.hd5','bkg',compression=9,complib='bzip2',mode='a')
-
-
-def cut_region(fileName,treeName,branch_names,features,cuts):
-    tmp_data_frame = (rpd.read_root(fileName,treeName, columns = branch_names)).query(cuts)
-        
-    for j in range(len(features)):
-        if j == 0:
-            X_features = tmp_data_frame[[features[j].replace('noexpand:','')]]
-        else:
-            X_features = np.concatenate([X_features,tmp_data_frame[[features[j].replace('noexpand:','')]]],axis=1)
-    
-    return np.round(X_features,5)
-
 
 def set_data(treeName,branch_names):
     utils.IO.data_df.append(rpd.read_root(utils.IO.dataName[0],treeName, columns = branch_names))
     utils.IO.data_df[0]['proc'] =  ( np.ones_like(utils.IO.data_df[0].index)*utils.IO.dataProc[0] ).astype(np.int8)
-    #input_df=rpd.read_root(utils.IO.dataName[0],treeName, columns = ['isSignal'])
     w = (np.ones_like(utils.IO.data_df[0].index)).astype(np.int8)
-    #utils.IO.data_df[0]['weight'] = np.multiply(w,input_df['isSignal'])
-    #utils.IO.data_df[0]['weight'] = np.multiply(w,1.)
     utils.IO.data_df[0]['weight'] = w
 
     y_data = utils.IO.data_df[0][['proc']]

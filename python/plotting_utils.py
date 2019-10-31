@@ -89,8 +89,8 @@ def plot_classifier_output(clf,X_total_train,X_total_test,y_total_train,y_total_
         alabel.set_fontsize('small')
 
     # Save the result to png
-    plt.savefig(utils.IO.plotFolder+"classifierOutputPlot_"+str(outString)+".pdf")
-    plt.savefig(utils.IO.plotFolder+"classifierOutputPlot_"+str(outString)+".png")
+    plt.savefig(str(outString)+".pdf")
+    plt.savefig(str(outString)+".png")
 
 
 #def plot_input_variables(X_sig,X_bkg,branch_names,y_bkg=None,n_bins=30,outString=True,plotProcess=True):
