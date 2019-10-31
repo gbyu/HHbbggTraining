@@ -4,4 +4,5 @@ cd /afs/cern.ch/user/i/ivovtin/HHggbb/CMSSW_10_2_0/src/
 eval `scramv1 runtime -sh`
 echo "CMSSW: "$CMSSW_BASE
 #Run your program
-ipython /afs/cern.ch/user/i/ivovtin/HHggbb/HHbbggTraining/scripts/optimizeClassifier.py
+cd /afs/cern.ch/user/i/ivovtin/HHggbb/HHbbggTraining/Training/scripts/
+ipython trainMVAHHbbgg_st.py

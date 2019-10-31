@@ -1,8 +1,24 @@
 void add_branch_res()
 {     
    //1 change
-   TString fnameAll ="/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/output_files/reduceTree_st_variables/Total_preselection_diffNaming_transformedMVA.root"; 
-   
+   //2017 
+   //TString fnameAll ="/afs/cern.ch/work/i/ivovtin/Hggbb/reduceTree_2017_mjj/reduceTree_st_variables/Total_preselection_diffNaming_transformedMVA.root"; 
+   //TString fnameAll ="/afs/cern.ch/work/i/ivovtin/Hggbb/reduceTree_2017_mjj/reduceTree_st_variables_add_ptmgg/Total_preselection_diffNaming_transformedMVA.root"; 
+   //TString fnameAll ="/afs/cern.ch/work/i/ivovtin/Hggbb/reduceTree_2017_mjj/reduceTree_st_variables_add_ptmgg_ptmjj_dR/Total_preselection_diffNaming_transformedMVA.root"; 
+   //2016
+   //TString fnameAll ="/afs/cern.ch/work/i/ivovtin/Hggbb/reduceTree_2016_mjj/reduceTree_st_variables/Total_preselection_diffNaming_transformedMVA.root"; 
+   //TString fnameAll ="/afs/cern.ch/work/i/ivovtin/Hggbb/reduceTree_2016_mjj/reduceTree_st_variables_add_ptmgg/Total_preselection_diffNaming_transformedMVA.root"; 
+   TString fnameAll ="/afs/cern.ch/work/i/ivovtin/Hggbb/reduceTree_2016_mjj/reduceTree_st_variables_add_ptmgg_ptmjj_dR/Total_preselection_diffNaming_transformedMVA.root"; 
+   //2016 for bb_yt
+   //TString fnameAll ="/afs/cern.ch/work/i/ivovtin/Hggbb/reduceTree_2016_mjj/reduceTree_st_variables_bb/Total_preselection_diffNaming_transformedMVA.root"; 
+   //TString fnameAll ="/afs/cern.ch/work/i/ivovtin/Hggbb/reduceTree_2016_mjj/reduceTree_st_variables_add_ptmgg_bb/Total_preselection_diffNaming_transformedMVA.root"; 
+   //TString fnameAll ="/afs/cern.ch/work/i/ivovtin/Hggbb/reduceTree_2016_mjj/reduceTree_st_variables_add_ptmgg_ptmjj_dR_bb/Total_preselection_diffNaming_transformedMVA.root"; 
+
+   //2016-17
+   //TString fnameAll ="/afs/cern.ch/work/i/ivovtin/Hggbb/2016-17/reduceTree_st_variables/Total_preselection_diffNaming_transformedMVA.root"; 
+   //TString fnameAll ="/afs/cern.ch/work/i/ivovtin/Hggbb/2016-17/reduceTree_st_variables_add_ptmgg/Total_preselection_diffNaming_transformedMVA.root"; 
+   //TString fnameAll ="/afs/cern.ch/work/i/ivovtin/Hggbb/2016-17/reduceTree_st_variables_add_ptmgg_ptmjj_dR/Total_preselection_diffNaming_transformedMVA.root"; 
+
    TFile *inputAll = TFile::Open(fnameAll);
    TTree *sigtree = (TTree*)inputAll->Get("reducedTree_sig");            //MC signal                                    121837
    TTree *datatree = (TTree*)inputAll->Get("reducedTree_bkg");           //data                                         269198
@@ -15,27 +31,61 @@ void add_branch_res()
    TTree *bkg5tree = (TTree*)inputAll->Get("reducedTree_bkg_5");     //VHToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8   105490                           
    TTree *bkg6tree = (TTree*)inputAll->Get("reducedTree_bkg_6");     //bHToGG_M-125_4FS_yb2_13TeV_amcatnlo               11250                  
    TTree *bkg7tree = (TTree*)inputAll->Get("reducedTree_bkg_7");     //ttHToGG_M125_13TeV_powheg_pythia8                414581                     
-   TTree *bkg8tree = (TTree*)inputAll->Get("reducedTree_bkg_8");     //VBFHToGG_M125_13TeV_amcatnlo_pythia8             101916                      
-   TTree *bkg9tree = (TTree*)inputAll->Get("reducedTree_bkg_9");     //GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8               1262                       
-   TTree *bkg10tree = (TTree*)inputAll->Get("reducedTree_bkg_10");     //GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8             74459                       
+   //TTree *bkg8tree = (TTree*)inputAll->Get("reducedTree_bkg_8");     //VBFHToGG_M125_13TeV_amcatnlo_pythia8             101916                      
+   TTree *bkg9tree = (TTree*)inputAll->Get("reducedTree_bkg_8");     //GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8               1262           
+   TTree *bkg10tree = (TTree*)inputAll->Get("reducedTree_bkg_9");     //GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8             74459                       
 
    float MVASig,MVAData,MVA0,MVA1,MVA2,MVA3,MVA4,MVA5,MVA6,MVA7,MVA8,MVA9,MVA10;
    float MVAoldSig,MVAoldData,MVAold0,MVAold1,MVAold2,MVAold3,MVAold4,MVAold5,MVAold6,MVAold7,MVAold8,MVAold9,MVAold10;
    float MVASigTr,MVADataTr,MVA0Tr,MVA1Tr,MVA2Tr,MVA3Tr,MVA4Tr,MVA5Tr,MVA6Tr,MVA7Tr,MVA8Tr,MVA9Tr,MVA10Tr;
    float MVAoldSigTr,MVAoldDataTr,MVAold0Tr,MVAold1Tr,MVAold2Tr,MVAold3Tr,MVAold4Tr,MVAold5Tr,MVAold6Tr,MVAold7Tr,MVAold8Tr,MVAold9Tr,MVAold10Tr;
    
-   TString fnameSig ="/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/2017/flattrees_st_cuts/output_GluGluToHHTo2B2G_node_SM_13TeV-madgraph_st_cuts.root"; 
-   TString fnamedata ="/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/2017/flattrees_st_cuts/DoubleEG_2017_st_cuts.root"; 
+   //2017   
+  /* 
+   TString fnameSig ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2017_withdR/output_GluGluToHHTo2B2G_node_SM_13TeV-madgraph.root"; 
+   TString fnamedata ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2017_withdR/DoubleEG.root"; 
    //bkg
-   TString fname0 ="/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/2017/flattrees_st_cuts/output_DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa_st_cuts.root"; 
-   TString fname3 ="/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/2017/flattrees_st_cuts/output_GluGluHToGG_M-125_13TeV_powheg_pythia8_st_cuts.root"; 
-   TString fname4 ="/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/2017/flattrees_st_cuts/output_VBFHToGG_M-125_13TeV_powheg_pythia8_st_cuts.root"; 
-   TString fname5 ="/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/2017/flattrees_st_cuts/output_VHToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8_st_cuts.root"; 
-   TString fname6 ="/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/2017/flattrees_st_cuts/output_bbHToGG_M-125_4FS_yb2_13TeV_amcatnlo.root"; 
-   TString fname7 ="/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/2017/flattrees_st_cuts/output_ttHToGG_M125_13TeV_powheg_pythia8_st_cuts.root"; 
-   TString fname8 ="/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/2017/flattrees_st_cuts/output_VBFHToGG_M125_13TeV_amcatnlo_pythia8_st_cuts.root"; 
-   TString fname9 ="/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/2017/flattrees_st_cuts/output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8_st_cuts.root"; 
-   TString fname10 ="/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/2017/flattrees_st_cuts/output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8_st_cuts.root"; 
+   TString fname0 ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2017_withdR/output_DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa.root"; 
+   TString fname3 ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2017_withdR/output_GluGluHToGG_M-125_13TeV_powheg_pythia8.root"; 
+   TString fname4 ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2017_withdR/output_VBFHToGG_M-125_13TeV_powheg_pythia8.root"; 
+   TString fname5 ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2017_withdR/output_VHToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8.root"; 
+   TString fname6 ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2017_withdR/output_bbHToGG_M-125_4FS_yb2_13TeV_amcatnlo.root"; 
+   TString fname7 ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2017_withdR/output_ttHToGG_M125_13TeV_powheg_pythia8.root"; 
+   ////TString fname8 ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2017_withdR/output_VBFHToGG_M125_13TeV_amcatnlo_pythia8.root"; 
+   TString fname9 ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2017_withdR/output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8.root"; 
+   TString fname10 ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2017_withdR/output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8.root"; 
+  */
+   //2016 
+   TString fnameSig ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2016_withdR/output_GluGluToHHTo2B2G_node_SM_13TeV-madgraph.root"; 
+   TString fnamedata ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2016_withdR/DoubleEG.root"; 
+   //bkg
+   TString fname0 ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2016_withdR/output_DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa.root"; 
+   TString fname3 ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2016_withdR/output_GluGluHToGG_M-125_13TeV_powheg_pythia8.root"; 
+   TString fname4 ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2016_withdR/output_VBFHToGG_M-125_13TeV_powheg_pythia8.root"; 
+   TString fname5 ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2016_withdR/output_VHToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8.root"; 
+   TString fname6 ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2016_withdR/output_bbHToGG_M-125_4FS_yb2_13TeV_amcatnlo.root";           //!!!!!!!
+   //TString fname6 ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2016_withdR/output_bbHToGG_M-125_4FS_ybyt_13TeV_amcatnlo.root"; 
+   TString fname7 ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2016_withdR/output_ttHToGG_M125_13TeV_powheg_pythia8.root"; 
+   ///not//TString fname8 ="/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/2016/flattrees_st_cuts/output_VBFHToGG_M125_13TeV_amcatnlo_pythia8_st_cuts.root"; 
+   TString fname9 ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2016_withdR/output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8.root"; 
+   TString fname10 ="/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2016_withdR/output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8.root"; 
+   
+ 
+   //2016-17
+   /*
+   TString fnameSig ="/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/2016-17/flattrees_st_cuts/output_GluGluToHHTo2B2G_node_SM_13TeV-madgraph_st_cuts.root"; 
+   TString fnamedata ="/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/2016-17/flattrees_st_cuts/DoubleEG_2016_st_cuts.root"; 
+   //bkg
+   TString fname0 ="/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/2016-17/flattrees_st_cuts/output_DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa_st_cuts.root"; 
+   TString fname3 ="/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/2016-17/flattrees_st_cuts/output_GluGluHToGG_M-125_13TeV_powheg_pythia8_st_cuts.root"; 
+   TString fname4 ="/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/2016-17/flattrees_st_cuts/output_VBFHToGG_M-125_13TeV_powheg_pythia8_st_cuts.root"; 
+   TString fname5 ="/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/2016-17/flattrees_st_cuts/output_VHToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8_st_cuts.root"; 
+   TString fname6 ="/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/2016-17/flattrees_st_cuts/output_bbHToGG_M-125_4FS_yb2_13TeV_amcatnlo.root"; 
+   TString fname7 ="/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/2016-17/flattrees_st_cuts/output_ttHToGG_M125_13TeV_powheg_pythia8_st_cuts.root"; 
+   //TString fname8 ="/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/2016/flattrees_st_cuts/output_VBFHToGG_M125_13TeV_amcatnlo_pythia8_st_cuts.root"; 
+   TString fname9 ="/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/2016-17/flattrees_st_cuts/output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8_st_cuts.root"; 
+   TString fname10 ="/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/2016-17/flattrees_st_cuts/output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8_st_cuts.root"; 
+  */  
    
    TFile *inputSig = TFile::Open(fnameSig);
    TTree *MCSigTree1 = (TTree*)inputSig->Get("bbggSelectionTree");                                     
@@ -48,8 +98,18 @@ void add_branch_res()
    TTree *MCBkgTree0 = (TTree*)input0->Get("bbggSelectionTree");                                     
    //2 -  GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8 + GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8                                  
    TChain* MCBkgTree2 = new TChain("MCBkgTree8","MCBkgTree8");
-   MCBkgTree2->Add("/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/2017/flattrees_st_cuts/output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8_st_cuts.root/bbggSelectionTree");                                                                             
-   MCBkgTree2->Add("/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/2017/flattrees_st_cuts/output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8_st_cuts.root/bbggSelectionTree");                                                                             
+   //2017
+   //MCBkgTree2->Add("/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2017_withdR/output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8.root/bbggSelectionTree");                                                                             
+   //MCBkgTree2->Add("/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2017_withdR/output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8.root/bbggSelectionTree");                                                                             
+   //
+   //2016
+   MCBkgTree2->Add("/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2016_withdR/output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8.root/bbggSelectionTree");                                                                             
+   MCBkgTree2->Add("/afs/cern.ch/work/i/ivovtin/public/Hggbb/flattrees_2016_withdR/output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8.root/bbggSelectionTree");                                                                             
+   //
+   //
+   //2016-17
+   //MCBkgTree2->Add("/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/2016-17/flattrees_st_cuts/output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8_st_cuts.root/bbggSelectionTree");                                                                             
+   //MCBkgTree2->Add("/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/2016-17/flattrees_st_cuts/output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8_st_cuts.root/bbggSelectionTree");                                                                             
    //3 - GluGluHToGG_M-125_13TeV_powheg_pythia8
    TFile *input3 = TFile::Open(fname3);
    TTree *MCBkgTree3 = (TTree*)input3->Get("bbggSelectionTree");  
@@ -65,9 +125,9 @@ void add_branch_res()
    //7 - ttHToGG_M125_13TeV_powheg_pythia8
    TFile *input7 = TFile::Open(fname7);
    TTree *MCBkgTree7 = (TTree*)input7->Get("bbggSelectionTree");                                        
-   //8 - VBFHToGG_M125_13TeV_amcatnlo_pythia8
-   TFile *input8 = TFile::Open(fname8);
-   TTree *MCBkgTree8 = (TTree*)input8->Get("bbggSelectionTree");                                     
+   //8 - VBFHToGG_M125_13TeV_amcatnlo_pythia8  //2017
+   //TFile *input8 = TFile::Open(fname8);
+   //TTree *MCBkgTree8 = (TTree*)input8->Get("bbggSelectionTree");                                     
    //9 - GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8
    TFile *input9 = TFile::Open(fname9);
    TTree *MCBkgTree9 = (TTree*)input9->Get("bbggSelectionTree");                                     
@@ -78,7 +138,7 @@ void add_branch_res()
 
    //3 change
    //Signal
-   TFile *newfileSig = new TFile("/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/new_GluGluToHHTo2B2G_node_SM_13TeV-madgraph.root","recreate");   
+   TFile *newfileSig = new TFile("/afs/cern.ch/work/i/ivovtin/public/ForMaxim/new_flattrees2016_mjj/output_GluGluToHHTo2B2G_node_SM_13TeV-madgraph.root","recreate");   
    TTree *newtreeSig = MCSigTree1->CloneTree();   
    TBranch *brMVASig = newtreeSig->Branch("MVAOutputTransformed",&MVASig,"MVAOutputTransformed/F"); 
    sigtree->SetBranchAddress("MVAOutputTransformed",&MVAoldSig); 
@@ -96,7 +156,7 @@ void add_branch_res()
    newfileSig->Close();
 
    //Data
-   TFile *newfileData = new TFile("/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/new_DoubleEG_2017.root","recreate");   
+   TFile *newfileData = new TFile("/afs/cern.ch/work/i/ivovtin/public/ForMaxim/new_flattrees2016_mjj/DoubleEG.root","recreate");   
    TTree *newtreeData = Daratree1->CloneTree();   
    TBranch *brMVAData = newtreeData->Branch("MVAOutputTransformed",&MVAData,"MVAOutputTransformed/F"); 
    datatree->SetBranchAddress("MVAOutputTransformed",&MVAoldData); 
@@ -114,7 +174,7 @@ void add_branch_res()
    newfileData->Close();
 
    //BkG 0 - DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa
-   TFile *newfile0 = new TFile("/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/new_DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa.root","recreate");   
+   TFile *newfile0 = new TFile("/afs/cern.ch/work/i/ivovtin/public/ForMaxim/new_flattrees2016_mjj/output_DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa.root","recreate");   
    TTree *newtree0 = MCBkgTree0->CloneTree();   
    TBranch *brMVA0 = newtree0->Branch("MVAOutputTransformed",&MVA0,"MVAOutputTransformed/F"); 
    bkg0tree->SetBranchAddress("MVAOutputTransformed",&MVAold0); 
@@ -132,7 +192,7 @@ void add_branch_res()
    newfile0->Close();
    
    //BkG 2 - GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8
-   TFile *newfile2 = new TFile("/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/new_GJet_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8.root","recreate");   
+   TFile *newfile2 = new TFile("/afs/cern.ch/work/i/ivovtin/public/ForMaxim/new_flattrees2016_mjj/output_GJet_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8.root","recreate");   
    TTree *newtree2 = MCBkgTree2->CloneTree();   
    TBranch *brMVA2 = newtree2->Branch("MVAOutputTransformed",&MVA2,"MVAOutputTransformed/F"); 
    bkg2tree->SetBranchAddress("MVAOutputTransformed",&MVAold2); 
@@ -150,7 +210,7 @@ void add_branch_res()
    newfile2->Close();
    
    //BkG 3 - GluGluHToGG_M-125_13TeV_powheg_pythia8
-   TFile *newfile3 = new TFile("/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/new_GluGluHToGG_M-125_13TeV_powheg_pythia8.root","recreate");   
+   TFile *newfile3 = new TFile("/afs/cern.ch/work/i/ivovtin/public/ForMaxim/new_flattrees2016_mjj/output_GluGluHToGG_M-125_13TeV_powheg_pythia8.root","recreate");   
    TTree *newtree3 = MCBkgTree3->CloneTree();   
    TBranch *brMVA3 = newtree3->Branch("MVAOutputTransformed",&MVA3,"MVAOutputTransformed/F"); 
    bkg3tree->SetBranchAddress("MVAOutputTransformed",&MVAold3); 
@@ -168,7 +228,7 @@ void add_branch_res()
    newfile3->Close();
 
    //BkG 4 - VBFHToGG_M-125_13TeV_powheg_pythia8
-   TFile *newfile4 = new TFile("/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/new_VBFHToGG_M-125_13TeV_powheg_pythia8.root","recreate");   
+   TFile *newfile4 = new TFile("/afs/cern.ch/work/i/ivovtin/public/ForMaxim/new_flattrees2016_mjj/output_VBFHToGG_M-125_13TeV_powheg_pythia8.root","recreate");   
    TTree *newtree4 = MCBkgTree4->CloneTree();   
    TBranch *brMVA4 = newtree4->Branch("MVAOutputTransformed",&MVA4,"MVAOutputTransformed/F"); 
    bkg4tree->SetBranchAddress("MVAOutputTransformed",&MVAold4); 
@@ -186,7 +246,7 @@ void add_branch_res()
    newfile4->Close();
 
    //BkG 5 - VHToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8
-   TFile *newfile5 = new TFile("/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/new_VHToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8_st_cuts.root","recreate");   
+   TFile *newfile5 = new TFile("/afs/cern.ch/work/i/ivovtin/public/ForMaxim/new_flattrees2016_mjj/output_VHToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8.root","recreate");   
    TTree *newtree5 = MCBkgTree5->CloneTree();   
    TBranch *brMVA5 = newtree5->Branch("MVAOutputTransformed",&MVA5,"MVAOutputTransformed/F"); 
    bkg5tree->SetBranchAddress("MVAOutputTransformed",&MVAold5); 
@@ -204,7 +264,8 @@ void add_branch_res()
    newfile5->Close();
 
    //BkG 6 - bbHToGG_M-125_4FS_yb2_13TeV_amcatnlo
-   TFile *newfile6 = new TFile("/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/new_bbHToGG_M-125_4FS_yb2_13TeV_amcatnlo.root","recreate");   
+   TFile *newfile6 = new TFile("/afs/cern.ch/work/i/ivovtin/public/ForMaxim/new_flattrees2016_mjj/output_bbHToGG_M-125_4FS_yb2_13TeV_amcatnlo.root","recreate"); //!!!!!  
+   //TFile *newfile6 = new TFile("/afs/cern.ch/work/i/ivovtin/public/ForMaxim/new_flattrees2016_mjj/output_bbHToGG_M-125_4FS_ybyt_13TeV_amcatnlo.root","recreate");   
    TTree *newtree6 = MCBkgTree6->CloneTree();   
    TBranch *brMVA6 = newtree6->Branch("MVAOutputTransformed",&MVA6,"MVAOutputTransformed/F"); 
    bkg6tree->SetBranchAddress("MVAOutputTransformed",&MVAold6); 
@@ -222,7 +283,7 @@ void add_branch_res()
    newfile6->Close();
 
    //BkG 7 - ttHToGG_M125_13TeV_powheg_pythia8
-   TFile *newfile7 = new TFile("/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/new_ttHToGG_M125_13TeV_powheg_pythia8.root","recreate");   
+   TFile *newfile7 = new TFile("/afs/cern.ch/work/i/ivovtin/public/ForMaxim/new_flattrees2016_mjj/output_ttHToGG_M125_13TeV_powheg_pythia8.root","recreate");   
    TTree *newtree7 = MCBkgTree7->CloneTree();   
    TBranch *brMVA7 = newtree7->Branch("MVAOutputTransformed",&MVA7,"MVAOutputTransformed/F"); 
    bkg7tree->SetBranchAddress("MVAOutputTransformed",&MVAold7); 
@@ -240,7 +301,7 @@ void add_branch_res()
    newfile7->Close();
 
    //BkG 8 - VBFHToGG_M125_13TeV_amcatnlo_pythia8
-   TFile *newfile8 = new TFile("/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/new_VBFHToGG_M125_13TeV_amcatnlo_pythia8.root","recreate");   
+  /* TFile *newfile8 = new TFile("/afs/cern.ch/work/i/ivovtin/public/ForMaxim/new_flattrees2016_mjj/output_VBFHToGG_M125_13TeV_amcatnlo_pythia8.root","recreate");   
    TTree *newtree8 = MCBkgTree6->CloneTree();   
    TBranch *brMVA8 = newtree8->Branch("MVAOutputTransformed",&MVA8,"MVAOutputTransformed/F"); 
    bkg8tree->SetBranchAddress("MVAOutputTransformed",&MVAold8); 
@@ -256,9 +317,10 @@ void add_branch_res()
    newtree8->Print();       
    newfile8->Write();
    newfile8->Close();
-
+*/
    //BkG 9 - GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8 
-   TFile *newfile9 = new TFile("/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/new_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8.root","recreate");   
+   TFile *newfile9 = new TFile("/afs/cern.ch/work/i/ivovtin/public/ForMaxim/new_flattrees2016_mjj/output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8.root","recreate");   
+   //TFile *newfile9 = new TFile("/afs/cern.ch/work/i/ivovtin/public/ForMaxim/new_flattrees2016_mjj/output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8.root","recreate");   
    TTree *newtree9 = MCBkgTree9->CloneTree();   
    TBranch *brMVA9 = newtree9->Branch("MVAOutputTransformed",&MVA9,"MVAOutputTransformed/F"); 
    bkg9tree->SetBranchAddress("MVAOutputTransformed",&MVAold9); 
@@ -276,7 +338,8 @@ void add_branch_res()
    newfile9->Close();
 
    //BkG 10 - GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8
-   TFile *newfile10 = new TFile("/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/new_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8.root","recreate");   
+   TFile *newfile10 = new TFile("/afs/cern.ch/work/i/ivovtin/public/ForMaxim/new_flattrees2016_mjj/output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8.root","recreate");   
+   //TFile *newfile10 = new TFile("/afs/cern.ch/work/i/ivovtin/public/ForMaxim/new_flattrees2016_mjj/output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8.root","recreate");   
    TTree *newtree10 = MCBkgTree10->CloneTree();   
    TBranch *brMVA10 = newtree10->Branch("MVAOutputTransformed",&MVA10,"MVAOutputTransformed/F"); 
    bkg10tree->SetBranchAddress("MVAOutputTransformed",&MVAold10); 

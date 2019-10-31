@@ -1,7 +1,8 @@
 #!/bin/bash
 cd /afs/cern.ch/user/i/ivovtin/HHggbb/CMSSW_10_2_0/src/
-#cmsenv
+#eval `cmsenv`
 eval `scramv1 runtime -sh`
 echo "CMSSW: "$CMSSW_BASE
+cd /afs/cern.ch/user/i/ivovtin/HHggbb/HHbbggTraining/scripts/
 #Run your program
-ipython /afs/cern.ch/user/i/ivovtin/HHggbb/HHbbggTraining/scripts/optimizeClassifier.py
+ipython createReducedTrees_st_2016.py

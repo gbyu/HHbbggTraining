@@ -1,5 +1,5 @@
 import os
-import sys; sys.path.append("/afs/cern.ch/user/i/ivovtin/HHggbb/HHbbgg_ETH/Training/python") # to load packages
+import sys; sys.path.append("/afs/cern.ch/user/i/ivovtin/HHggbb/HHbbggTraining/Training/python") # to load packages
 import training_utils as utils
 import numpy as np
 reload(utils)
@@ -118,8 +118,8 @@ param_grid = {'n_estimators': [500,1000,1500,2000],
               'gamma' : [0,0.15,0.3], 
               'learning_rate': [0.01,0.1, 0.2,0.3],    
               'reg_alpha':[0., 0.01, 0.1],
-              'reg_lambda':[1e-2, 5e-2, 0.1, 0.3],
-              'min_child_weight':[1e-06,1e-05,1e-04]
+              'reg_lambda':[0.,1e-2, 5e-2, 0.1, 0.3],
+              'min_child_weight':[1e-06,1e-05,1e-04,1e-03]
 	     }
 
 #optimization.setupJoblib("ivovtin")
