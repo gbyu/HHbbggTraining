@@ -28,9 +28,6 @@ def main(options,args):
     name = options.file.split("/")[nameTagPos]
 
 
-
-#    fout = ROOT.TFile.Open("$HOME/HHbbgg_ETH_devel/Limits/macros/plots/cumulatives/cumulativeTransformation_"+name+".root","recreate")
-#    fout = ROOT.TFile.Open("/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/cumulativeTransformation_"+name,"recreate")
     fout = ROOT.TFile.Open("cumulativeTransformation_"+name,"recreate")
 
     nbins = 10000
@@ -38,7 +35,6 @@ def main(options,args):
     xup = 1.
     histoMVA = ROOT.TH1F("histoMVA","histoMVA",nbins,xlow,xup)
 #    tree.Draw("MVAOutput>>histoMVA",ROOT.TCut("weight"))
-#    tree.Draw("MVAOutput>>histoMVA",ROOT.TCut("weight2"))
     tree.Draw("MVAOutput>>histoMVA")
 #    histoMVA.FillRandom("gaus",1000000)
 
@@ -70,20 +66,14 @@ def main(options,args):
     formats = [".png",".pdf"]
 
     for format in formats:
-#        c.SaveAs("$HOME/HHbbgg_ETH_devel/Limits/macros/plots/cumulatives/"+name+"_func"+format)
-#        c.SaveAs("/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/"+name+"_func"+format)
         c.SaveAs(name+"_func"+format)
 
     cumulativeGraph.Draw("AP")
     for format in formats:
-#        c.SaveAs("$HOME/HHbbgg_ETH_devel/Limits/macros/plots/cumulatives/"+name+"_cum"+format)
-#        c.SaveAs("/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/"+name+"_cum"+format)
         c.SaveAs(name+"_cum"+format)
 
     evalCumulatives.Draw("EP")
     for format in formats:
-#        c.SaveAs("$HOME/HHbbgg_ETH_devel/Limits/macros/plots/cumulatives/"+name+"_evalx"+format)
-#        c.SaveAs("/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/"+name+"_evalx"+format)
         c.SaveAs(name+"_evalx"+format)
     
 
@@ -98,7 +88,6 @@ def main(options,args):
         "reducedTree_sig",
         "reducedTree_bkg",
         "reducedTree_bkg_0",
-#        "reducedTree_bkg_1",
         "reducedTree_bkg_2",
         "reducedTree_bkg_3",
         "reducedTree_bkg_4",
@@ -109,14 +98,6 @@ def main(options,args):
         "reducedTree_bkg_9",
         "reducedTree_bkg_10"
         ]
-
-
-#    for i in range(2,14):
-#        processes.append("reducedTree_sig_node_"+str(i))
-#
-#    for i in range(0,8):
-#        if i == 1: continue
-#        processes.append("reducedTree_bkg_"+str(i))
 
 
     fin = ROOT.TFile.Open(options.file)
