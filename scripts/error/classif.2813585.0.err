@@ -1,2 +1,0 @@
-/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/py2-scikit-learn/0.19.1/lib/python2.7/site-packages/sklearn/base.py:311: UserWarning: Trying to unpickle estimator LabelEncoder from version 0.20.3 when using version 0.19.1. This might lead to breaking code or invalid results. Use at your own risk.
-  UserWarning)
