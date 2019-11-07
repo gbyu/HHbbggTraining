@@ -118,10 +118,6 @@ X_data,y_data,weights_data = preprocessing.clean_signal_events_single_dataset(X_
 #bbggTrees have by default signal and CR events, let's be sure that we clean it
 X_bkg,y_bkg,weights_bkg,X_sig,y_sig,weights_sig=preprocessing.clean_signal_events(X_bkg,y_bkg,weights_bkg,X_sig,y_sig,weights_sig)
 
-#np.savetxt('/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/xbkg.txt',X_bkg)
-#np.savetxt('/eos/user/i/ivovtin/HHggbb/HHbbgg_ETH_devel/Training/weightsbkg.txt',weights_bkg)
-#preprocessing.adjust_and_compress(utils.IO.background_df[0]).to_csv('/tmp/micheli/bkg.csv')
-
 
 # load the model from disk
 from sklearn.externals import joblib

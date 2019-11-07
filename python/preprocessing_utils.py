@@ -58,67 +58,6 @@ def normalize_process_weights(w_b,y_b,w_s,y_s):
     return w_bkg,w_sig
 
 
-def scale_process_weight(w_b,y_b,proc,sf):
-    w_bkg = []
-    process=999
-    for i in range(utils.IO.nBkg):
-        if utils.IO.bkgProc[i] == proc:
-            utils.IO.background_df[i][['weight']] = np.multiply(utils.IO.background_df[i][['weight']],sf)
-            w_proc = np.asarray(utils.IO.background_df[i][['weight']])
-        else:
-            if process == utils.IO.bkgProc[i]: #don't do twice multiple samples of same process, like GJet
-                continue
-            process =  utils.IO.bkgProc[i]
-            w_b = np.reshape(w_b,(len(w_b),1))
-
-
-            w_proc = np.asarray(w_b[np.asarray(y_b) == utils.IO.bkgProc[i]])
-            w_proc = np.reshape(w_proc,(len(w_proc),1))
-            
-        if i == 0:
-            w_bkg = w_proc
-        else:
-            w_bkg =  np.concatenate((w_bkg,w_proc))
-
-    return w_bkg.reshape(len(w_bkg),1) 
-    
-
-def weight_signal_with_resolution(w_s,y_s):
-    proc=999
-    for i in range(utils.IO.nSig):
-         w_sig = np.asarray(w_s[np.asarray(y_s) == utils.IO.sigProc[i]])
-	 proc = utils.IO.sigProc[i]
-#	 utils.IO.signal_df[i][['weight']] = np.divide(utils.IO.signal_df[i][['weight']],utils.IO.signal_df[i][['sigmaMOverMDecorr']])
-	 utils.IO.signal_df[i][['weight']] = np.divide(utils.IO.signal_df[i][['weight']],utils.IO.signal_df[i][['sigmaMOverM']])
-
-    return utils.IO.signal_df[i][['weight']]
-
-def weight_background_with_resolution(w_b,y_b,proc):
-    w_bkg = []
-    process=999
-    for i in range(utils.IO.nBkg):
-        if utils.IO.bkgProc[i] == proc:
-#            utils.IO.background_df[i][['weight']] = np.divide(utils.IO.background_df[i][['weight']],utils.IO.background_df[i][['sigmaMOverMDecorr']])
-            utils.IO.background_df[i][['weight']] = np.divide(utils.IO.background_df[i][['weight']],utils.IO.background_df[i][['sigmaMOverM']])
-            w_proc = np.asarray(utils.IO.background_df[i][['weight']])
-            np.reshape(w_proc,(len(utils.IO.background_df[i][['weight']]),))
-        else:
-            if process == utils.IO.bkgProc[i]: #don't do twice multiple samples of same process, like GJet
-                continue
-            process =  utils.IO.bkgProc[i]
-            w_proc = np.asarray(w_b[np.asarray(y_b) == utils.IO.bkgProc[i]])
-
-        if i == 0:
-            w_bkg = w_proc
-        else:
-            w_bkg =  np.concatenate((w_bkg,np.asarray(w_proc.ravel())))
-        
-            
-    return w_bkg.reshape(len(w_bkg),1)
-
-
-
-
 def get_training_sample(x,splitting=0.5):
     halfSample = int((x.size/len(x.columns))*splitting)
     return np.split(x,[halfSample])[0]
@@ -130,7 +69,6 @@ def get_test_sample(x,splitting=0.5):
 
     
 def get_total_training_sample(x_sig,x_bkg,splitting=0.5):
-#def get_total_training_sample(x_sig,x_bkg,splitting=0.20):
     x_s=pd.DataFrame(x_sig)
     x_b=pd.DataFrame(x_bkg)
     halfSample_s = int((x_s.size/len(x_s.columns))*splitting)
@@ -139,7 +77,6 @@ def get_total_training_sample(x_sig,x_bkg,splitting=0.5):
 
     
 def get_total_test_sample(x_sig,x_bkg,splitting=0.5):
-#def get_total_test_sample(x_sig,x_bkg,splitting=0.20):
     x_s=pd.DataFrame(x_sig)
     x_b=pd.DataFrame(x_bkg)
     halfSample_s = int((x_s.size/len(x_s.columns))*splitting)

@@ -281,7 +281,7 @@ def bisection(array,value):#be careful, works with sorted arrays
 
 
         
-def plot_feature_importance(clf,features,end='',path='/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/output_files/'): 
+def plot_feature_importance(clf,features,end='',path='/home/ovtin/cernbox/HHggbb/HHbbggTraining/Training/output_files/'): 
 	features_importance =  optimization.feature_importances_(clf)
 	features_dict = {features[i]:features_importance[i] for i in range(0,len(features)) }
 	sorted_features_values = sorted( list(features_dict.values()),reverse=True)

@@ -59,7 +59,6 @@ import pandas as pd
 import root_pandas as rpd
 from root_numpy import root2array, list_trees
 
-#print list_trees('/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/2016/output_GluGluToHHTo2B2G_node_SM_13TeV-madgraph.root')
 for i in range(len(utils.IO.backgroundName)):        
     print list_trees(utils.IO.backgroundName[i])
         
@@ -67,7 +66,6 @@ preprocessing.set_signals_and_backgrounds("bbggSelectionTree",branch_names)
 X_bkg,y_bkg,weights_bkg,X_sig,y_sig,weights_sig=preprocessing.set_variables(branch_names)
 
 #relative weighting between components of one class is kept, all classes normalized to the same
-#weights_sig=preprocessing.weight_signal_with_resolution(weights_sig,y_sig)
 weights_bkg,weights_sig=preprocessing.normalize_process_weights(weights_bkg,y_bkg,weights_sig,y_sig)
 
 X_bkg,y_bkg,weights_bkg = preprocessing.randomize(X_bkg,y_bkg,weights_bkg)

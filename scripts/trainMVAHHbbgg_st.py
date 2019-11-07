@@ -80,11 +80,10 @@ for i in range(len(utils.IO.backgroundName)):
 preprocessing.set_signals_and_backgrounds("bbggSelectionTree",branch_names)
 X_bkg,y_bkg,weights_bkg,X_sig,y_sig,weights_sig=preprocessing.set_variables(branch_names)
 
-#np.savetxt('/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/weightssig.txt',weights_sig)
-#np.savetxt('/home/ovtin/cernbox/HHggbb/HHbbgg_ETH_devel/Training/weightsbkg.txt',weights_bkg)
+#np.savetxt('/home/ovtin/cernbox/HHggbb/weightssig.txt',weights_sig)
+#np.savetxt('/home/ovtin/cernbox/HHggbb/weightsbkg.txt',weights_bkg)
 
 #relative weighting between components of one class is kept, all classes normalized to the same
-#weights_sig=preprocessing.weight_signal_with_resolution(weights_sig,y_sig)
 weights_bkg,weights_sig=preprocessing.normalize_process_weights(weights_bkg,y_bkg,weights_sig,y_sig)
 
 X_bkg,y_bkg,weights_bkg = preprocessing.randomize(X_bkg,y_bkg,weights_bkg)
