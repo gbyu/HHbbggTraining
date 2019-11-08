@@ -1,16 +1,8 @@
 import os
 import sys; sys.path.append("/afs/cern.ch/user/i/ivovtin/HHggbb/HHbbggTraining/python") # to load packages
 import training_utils as utils
-import numpy as np
-reload(utils)
 import preprocessing_utils as preprocessing
 reload(preprocessing)
-import plotting_utils as plotting
-reload(plotting)
-import optimization_utils as optimization
-reload(optimization)
-import postprocessing_utils as postprocessing
-reload(postprocessing)
 
 from sklearn.externals import joblib
 outTag = '2016/st_ptmgg_ptmjj_dR/'
@@ -87,6 +79,13 @@ X_total_test = preprocessing.get_total_test_sample(X_sig,X_bkg)
 w_total_train = preprocessing.get_total_training_sample(weights_sig,weights_bkg).ravel()
 w_total_test = preprocessing.get_total_test_sample(weights_sig,weights_bkg).ravel()
 
+import matplotlib as mpl
+#if os.environ.get('DISPLAY','') == '':
+#    print('no display found. Using non-interactive Agg backend')
+mpl.use('Agg')
+import plotting_utils as plotting
+reload(plotting)
+import numpy as np
 import matplotlib.pyplot as plt
 reload(plt)
 
@@ -95,14 +94,17 @@ reload(plt)
 #plt.savefig(utils.IO.plotFolder+"test_xgb_diphotons.eps")
 ##plt.show()
 fpr_dipho,tpr_dipho = plotting.plot_roc_curve_multiclass_singleBkg(X_total_test,y_total_test,loaded_model,-2,outString="test_xgb_gJets",weights=w_total_test)
-plt.savefig("/afs/cern.ch/user/i/ivovtin/HHggbb/HHbbggTraining/output_files/test_xgb_gJets.eps")
+plt.savefig(utils.IO.plotFolder+"test_xgb_gJets.eps")
+curve_roc = np.array([fpr_dipho, tpr_dipho])
+np.savetxt('roc_test_dipho.txt', curve_roc)
+
 #plt.show()
 #train
 #fpr_gJ_train,tpr_gJ_train = plotting.plot_roc_curve_multiclass_singleBkg(X_total_train,y_total_train,loaded_model,-1,outString="train_xgb_diphotons",weights=w_total_test)
 #plt.savefig(utils.IO.plotFolder+"train_xgb_diphotons.eps")
 ##plt.show()
-fpr_dipho_train,tpr_dipho_train = plotting.plot_roc_curve_multiclass_singleBkg(X_total_train,y_total_train,loaded_model,-2,outString="train_xgb_gJets",weights=w_total_test)
-plt.savefig("/afs/cern.ch/user/i/ivovtin/HHggbb/HHbbggTraining/output_files/train_xgb_gJets.eps")
+#fpr_dipho_train,tpr_dipho_train = plotting.plot_roc_curve_multiclass_singleBkg(X_total_train,y_total_train,loaded_model,-2,outString="train_xgb_gJets",weights=w_total_test)
+#plt.savefig(utils.IO.plotFolder+"train_xgb_gJets.eps")
 #plt.show()
 
 print utils.IO.plotFolder
