@@ -11,19 +11,19 @@ import postprocessing_utils as postprocessing
 reload(postprocessing)
 from IPython import get_ipython
 
-ntuples = '2016/flattrees_st_cuts_ptMjj'
+ntuples = 'legacy_branch_flattrees/flattrees_legacy_cuts_2016'
 #ntuples = '2017/flattrees_st_cuts_ptMjj'
 # "%" sign allows to interpret the rest as a system command
 get_ipython().magic(u'env data=$utils.IO.ldata$ntuples')
 files = get_ipython().getoutput(u'ls $data | sort -t_ -k 3 -n')
-signal = [s for s in files if "output_GluGluToHHTo2B2G_node_SM_13TeV-madgraph_st_cuts.root" in s]
-diphotonJets = [s for s in files if "output_DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa_st_cuts.root" in s]
+signal = [s for s in files if "output_GluGluToHHTo2B2G_node_SM_13TeV-madgraph.root" in s]
+diphotonJets = [s for s in files if "output_DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa.root" in s]
 #2016
-gJets_lowPt = [s for s in files if "output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8_st_cuts.root" in s]
-gJets_highPt = [s for s in files if "output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8_st_cuts.root" in s]
+gJets_lowPt = [s for s in files if "output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8.root" in s]
+gJets_highPt = [s for s in files if "output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8.root" in s]
 #2017
-#gJets_lowPt = [s for s in files if "output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8_st_cuts_ptMjj.root" in s]
-#gJets_highPt = [s for s in files if "output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8_st_cuts_ptMjj.root" in s]
+#gJets_lowPt = [s for s in files if "output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8_st_cuts.root" in s]
+#gJets_highPt = [s for s in files if "output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8_st_cuts.root" in s]
 #
 
 utils.IO.add_signal(ntuples,signal,1)
@@ -39,7 +39,7 @@ for i in range(len(utils.IO.signalName)):
 
 #use noexpand for root expressions, it needs this file https://github.com/ibab/root_pandas/blob/master/root_pandas/readwrite.py
 #st values with adding pt_gg/m_gg, pt_jj/M_jj
-branch_names = 'absCosThetaStar_CS,absCosTheta_bb,absCosTheta_gg,PhoJetMinDr,customLeadingPhotonIDMVA,customSubLeadingPhotonIDMVA,leadingJet_DeepCSV,subleadingJet_DeepCSV,leadingPhotonSigOverE,subleadingPhotonSigOverE,sigmaMOverM,diphotonCandidatePtOverdiHiggsM,dijetCandidatePtOverdiHiggsM,leadingJet_bRegNNResolution,subleadingJet_bRegNNResolution,noexpand:sigmaMJets/Mjj,noexpand:leadingPhoton_pt/CMS_hgg_mass,noexpand:subleadingPhoton_pt/CMS_hgg_mass,noexpand:leadingJet_pt/Mjj,noexpand:subleadingJet_pt/Mjj,PhoJetotherDr,Mjj'.split(",")
+branch_names = 'absCosThetaStar_CS,absCosTheta_bb,absCosTheta_gg,PhoJetMinDr,customLeadingPhotonIDMVA,customSubLeadingPhotonIDMVA,leadingJet_DeepFlavour,subleadingJet_DeepFlavour,leadingPhotonSigOverE,subleadingPhotonSigOverE,sigmaMOverM,diphotonCandidatePtOverdiHiggsM,dijetCandidatePtOverdiHiggsM,leadingJet_bRegNNResolution,subleadingJet_bRegNNResolution,noexpand:sigmaMJets/Mjj,noexpand:leadingPhoton_pt/CMS_hgg_mass,noexpand:subleadingPhoton_pt/CMS_hgg_mass,noexpand:leadingJet_pt/Mjj,noexpand:subleadingJet_pt/Mjj,PhoJetOtherDr'.split(",")
 
 branch_names = [c.strip() for c in branch_names]
 print branch_names
@@ -84,10 +84,15 @@ from sklearn.metrics import mean_squared_error
 
 #basic
 params = {'base_score': 0.5, 'colsample_bylevel': 1, 'colsample_bytree': 1,
-       'gamma': 0, 'learning_rate': 0.1, 'max_delta_step': 0, 'max_depth': 10,
-       'min_child_weight': 1e-05, 'missing': None, 'n_estimators': 2000, 'nthread': 20,
+       'gamma': 0, 'learning_rate': 0.1, 'max_delta_step': 0, 'max_depth': 3,
+       'min_child_weight': 1e-05, 'missing': None, 'n_estimators': 50, 'nthread': 20,
        'objective': 'binary:logistic', 'reg_alpha': 0, 'reg_lambda': 0.1,
        'scale_pos_weight': 1, 'seed': 0, 'silent': True, 'subsample': 1 }
+#params = {'base_score': 0.5, 'colsample_bylevel': 1, 'colsample_bytree': 1,
+#       'gamma': 0, 'learning_rate': 0.1, 'max_delta_step': 0, 'max_depth': 10,
+#       'min_child_weight': 1e-05, 'missing': None, 'n_estimators': 2000, 'nthread': 20,
+#       'objective': 'binary:logistic', 'reg_alpha': 0, 'reg_lambda': 0.1,
+#       'scale_pos_weight': 1, 'seed': 0, 'silent': True, 'subsample': 1 }
 clf = xgb.XGBClassifier(**params)
 eval_set = [(X_total_train, y_total_train), (X_total_test, y_total_test)]
 #clf.fit(X_total_train, y_total_train, sample_weight=w_total_train, eval_set=eval_set, eval_metric=["error", "logloss", "auc"], verbose=True)
@@ -102,10 +107,17 @@ print clf.score(X_total_train,y_total_train)
 
 from xgboost import plot_tree
 from sklearn.metrics import accuracy_score
+import matplotlib as mpl
+#if os.environ.get('DISPLAY','') == '':
+#    print('no display found. Using non-interactive Agg backend')
+mpl.use('Agg')
 import plotting_utils as plotting
 reload(plotting)
+import numpy as np
+import matplotlib.pyplot as plt
+reload(plt)
 
-outTag = '2016/st_MC_Bkg_ptmgg_ptmjj_dR_with_Mjj/'
+outTag = '2016/dev_legecy_runII_ptmgg_ptmjj_dR/'
 joblib.dump(clf, os.path.expanduser(utils.IO.plotFolder+outTag+'simlple_Test_binary_st.pkl'), compress=9)
 
 #plotting.plot_input_variables(X_sig,X_bkg,branch_names)
@@ -121,9 +133,6 @@ plotting.plot_classifier_output(clf,X_total_train,X_total_test,y_total_train,y_t
 #plotting.print_roc_report(fpr,tpr)
 #plt.show()
 
-import matplotlib.pyplot as plt
-reload(plt)
-
 #plt.bar(range(len(clf.feature_importances_)), clf.feature_importances_)
 #plt.savefig(utils.IO.plotFolder+outTag+"importance1.eps")
 #plt.show()
@@ -132,22 +141,22 @@ xgb.plot_importance(clf)
 plt.savefig(utils.IO.plotFolder+outTag+"importance2.eps")
 #plt.show()
 
-fpr_dipho_2ndtest_2,tpr_dipho_2ndtest_2 = plotting.plot_roc_curve_multiclass_singleBkg(X_total_test,y_total_test,clf,-1,1,outTag+"test_xgbr_diphotons_st_cuts",weights=w_total_test)
-plotting.print_roc_report(fpr_dipho_2ndtest_2,tpr_dipho_2ndtest_2,outString=outTag+"test_xgbr_diphotons_st_cuts")
-plt.savefig(utils.IO.plotFolder+outTag+"test_xgbr_diphotons_st_cuts.eps")
+fpr_dipho_2ndtest_2,tpr_dipho_2ndtest_2 = plotting.plot_roc_curve_multiclass_singleBkg(X_total_test,y_total_test,clf,-1,1,outTag+"test_xgbr_diphotons",weights=w_total_test)
+plotting.print_roc_report(fpr_dipho_2ndtest_2,tpr_dipho_2ndtest_2,outString=outTag+"test_xgbr_diphotons")
+plt.savefig(utils.IO.plotFolder+outTag+"test_xgbr_diphotons.eps")
 #plt.show()
-fpr_gJets_2ndtest_2,tpr_gJets_2ndtest_2 = plotting.plot_roc_curve_multiclass_singleBkg(X_total_test,y_total_test,clf,-2,1,outTag+"test_xgbr_gJets_st_cuts",weights=w_total_test)
-plotting.print_roc_report(fpr_gJets_2ndtest_2,tpr_gJets_2ndtest_2,outString=outTag+"test_xgbr_gJets_st_cuts")
-plt.savefig(utils.IO.plotFolder+outTag+"test_xgbr_gJets_st_cuts.eps")
+fpr_gJets_2ndtest_2,tpr_gJets_2ndtest_2 = plotting.plot_roc_curve_multiclass_singleBkg(X_total_test,y_total_test,clf,-2,1,outTag+"test_xgbr_gJets",weights=w_total_test)
+plotting.print_roc_report(fpr_gJets_2ndtest_2,tpr_gJets_2ndtest_2,outString=outTag+"test_xgbr_gJets")
+plt.savefig(utils.IO.plotFolder+outTag+"test_xgbr_gJets.eps")
 #plt.show()
 
-fpr_dipho_2ndtrain_2,tpr_dipho_2ndtrain_2 = plotting.plot_roc_curve_multiclass_singleBkg(X_total_train,y_total_train,clf,-1,1,outTag+"train_xgbr_diphotons_st_cuts",weights=w_total_train)
-plotting.print_roc_report(fpr_dipho_2ndtrain_2,tpr_dipho_2ndtrain_2,outString=outTag+"train_xgbr_diphotons_st_cuts")
-plt.savefig(utils.IO.plotFolder+outTag+"train_xgbr_diphotons_st_cuts.eps")
+fpr_dipho_2ndtrain_2,tpr_dipho_2ndtrain_2 = plotting.plot_roc_curve_multiclass_singleBkg(X_total_train,y_total_train,clf,-1,1,outTag+"train_xgbr_diphotons",weights=w_total_train)
+plotting.print_roc_report(fpr_dipho_2ndtrain_2,tpr_dipho_2ndtrain_2,outString=outTag+"train_xgbr_diphotons")
+plt.savefig(utils.IO.plotFolder+outTag+"train_xgbr_diphotons.eps")
 #plt.show()
-fpr_gJets_2ndtrain_2,tpr_gJets_2ndtrain_2 = plotting.plot_roc_curve_multiclass_singleBkg(X_total_train,y_total_train,clf,-2,1,outTag+"train_xgbr_gJets_st_cuts",weights=w_total_train)
-plotting.print_roc_report(fpr_gJets_2ndtrain_2,tpr_gJets_2ndtrain_2,outString=outTag+"train_xgbr_gJets_st_cuts")
-plt.savefig(utils.IO.plotFolder+outTag+"train_xgbr_gJets_st_cuts.eps")
+fpr_gJets_2ndtrain_2,tpr_gJets_2ndtrain_2 = plotting.plot_roc_curve_multiclass_singleBkg(X_total_train,y_total_train,clf,-2,1,outTag+"train_xgbr_gJets",weights=w_total_train)
+plotting.print_roc_report(fpr_gJets_2ndtrain_2,tpr_gJets_2ndtrain_2,outString=outTag+"train_xgbr_gJets")
+plt.savefig(utils.IO.plotFolder+outTag+"train_xgbr_gJets.eps")
 #plt.show()
 
 
@@ -155,7 +164,7 @@ plt.savefig(utils.IO.plotFolder+outTag+"train_xgbr_gJets_st_cuts.eps")
 #
 # Plot feature importance
 #importances = clf.get_fscore()
-'''
+
 importances = clf.get_booster().get_score(importance_type='weight')
 importance_frame = pd.DataFrame({'Importance': list(importances.values()), 'Feature': list(importances.keys())})
 importance_frame.sort_values(by = 'Importance', inplace = True)
@@ -179,7 +188,7 @@ ax.plot(x_axis, results['validation_1']['mlogloss'], label='Test')
 ax.legend()
 plt.ylabel('Log Loss')
 plt.title('XGBoost Log Loss')
-plt.savefig(utils.IO.plotFolder+"XGBoostLogLoss.eps")
+plt.savefig(utils.IO.plotFolder+outTag+"XGBoostLogLoss.eps")
 #plt.show()
 ## plot classification error
 fig, ax = plt.subplots()
@@ -188,7 +197,7 @@ ax.plot(x_axis, results['validation_1']['merror'], label='Test')
 ax.legend()
 plt.ylabel('Classification Error')
 plt.title('XGBoost Classification Error')
-plt.savefig(utils.IO.plotFolder+"XGBoostClassificationError.eps")
+plt.savefig(utils.IO.plotFolder+outTag+"XGBoostClassificationError.eps")
 #plt.show()
-'''
+
 
