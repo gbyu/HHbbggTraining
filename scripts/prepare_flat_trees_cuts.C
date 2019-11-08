@@ -18,10 +18,7 @@ void prepare_flat_trees_cuts()
      TFile *input = TFile::Open(dir_in + fname);
      TDirectory *dir = input->GetDirectory("tagsDumper/trees");
      TTree *oldtree;
-     if(i==0) oldtree = (TTree*)dir->Get("bbggtrees");                                
-     if(i==1) oldtree = (TTree*)dir->Get("bbggtrees");                                
-     if(i==2) oldtree = (TTree*)dir->Get("bbggtrees");                                
-     if(i==3) oldtree = (TTree*)dir->Get("bbggtrees");                                
+     oldtree = (TTree*)dir->Get("bbggtrees");                                
 
      oldtree->SetName("bbggSelectionTree");
      oldtree->SetTitle("bbggSelectionTree"); 
