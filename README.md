@@ -32,7 +32,7 @@ These classes have to be loaded at the beginning of your notebook.
 
 - HHbbggTraining/scripts/<br />
   In this directory realized code for training, optimization and add MVA score to main tree in MC/Data samples which you can use on lxplus. <br />
-  1. prepare_data2016_cuts.C and prepare_data2017_cuts.C <br />
+  1. prepare_flat_trees.C <br />
   The preparation Root-trees with cuts and variable PhoJetOtherDr for training. Rename tagsDumper/trees to bbggSelectionTree.
 
   2. trainMVAHHbbgg_st.py, trainMVAHHbbgg_ptmgg.py and trainMVAHHbbgg_ptmgg_ptmjj_dR.py <br />
@@ -49,7 +49,7 @@ These classes have to be loaded at the beginning of your notebook.
    Example:
    python transformMVAOutput.py -i result.root 
 
-  6. prepare_data2016.C and prepare_data2017.C <br />
+  6. prepare_flat_trees.C <br />
   The preparation Root-trees without cuts but with variable PhoJetOtherDr for training. Rename tagsDumper/trees to bbggSelectionTree. 
   
   7. add_branch_res.C <br />
