@@ -17,7 +17,6 @@ def main(options,args):
     fin = ROOT.TFile.Open(options.file)
     tree = fin.Get("reducedTree_sig")
 
-
     for nameTagPos,s in enumerate(options.file.split("/")):
         print nameTagPos, s
         if "outfil" in s:
@@ -81,7 +80,6 @@ def main(options,args):
     fout.Write()
     fout.Close()
 
-
     fin.cd()
 
     processes = [
@@ -98,7 +96,6 @@ def main(options,args):
         "reducedTree_bkg_9",
         "reducedTree_bkg_10"
         ]
-
 
     fin = ROOT.TFile.Open(options.file)
     print fin

@@ -1,6 +1,6 @@
 void prepare_flat_trees()
 {
-    int N=10;  //for cuts need set N=4; for flat trees with PhoJetOtherdR set N=11 
+    int N=11;  //for cuts need set N=4; for flat trees with PhoJetOtherdR set N=11 
     int tag=2016;    
     TString dir_in = "/afs/cern.ch/user/i/ivovtin/workarea/Hggbb/legacy_branch_flattrees/2016/";
     //out directoty with PhoJetOtherdR cuts for MC
@@ -11,7 +11,7 @@ void prepare_flat_trees()
     TString Cuts = "";
     //TString Cuts = "leadingPhoton_pt/CMS_hgg_mass>1/3 && subleadingPhoton_pt/CMS_hgg_mass>1/4 && leadingJet_pt>25 && subleadingJet_pt>25 && CMS_hgg_mass>100 && CMS_hgg_mass<180 && Mjj>70 && Mjj<190 && PhoJetMinDr>0.4 && leadingJet_DeepCSV>0 && subleadingJet_DeepCSV>0 && leadingPhoton_eta>-2.5 && leadingPhoton_eta<2.5 && subleadingPhoton_eta>-2.5 && subleadingPhoton_eta<2.5 && leadingJet_eta>-2.4 && leadingJet_eta<2.4 && subleadingJet_eta>-2.4 && subleadingJet_eta<2.4  && leadingJet_pt/Mjj>1/4 && subleadingJet_pt/Mjj>1/4";
 
-  for(int i=0; i<N; i++)
+  for(int i=10; i<N; i++)
   {
      TString fname;
      //1 change

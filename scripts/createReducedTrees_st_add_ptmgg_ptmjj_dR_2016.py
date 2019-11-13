@@ -19,7 +19,7 @@ reload(plotting)
 reload(optimization)
 reload(postprocessing)
 
-ntuples = 'flattrees_2016_withdR'
+ntuples = 'legacy_branch_flattrees/flattrees_2016_withdR'
 get_ipython().magic(u'env data=$utils.IO.ldata$ntuples')
 files = get_ipython().getoutput(u'ls $data | sort -t_ -k 3 -n')
 #
@@ -30,14 +30,13 @@ gJets_highPt = [s for s in files if "output_GJet_Pt-40toInf_DoubleEMEnriched_MGG
 ggH = [s for s in files if "output_GluGluHToGG_" in s]
 vbf = [s for s in files if "output_VBFHToGG_M-125_13TeV_powheg_pythia8" in s]
 VH = [s for s in files if "output_VHToGG_" in s]
-bbH = [s for s in files if "output_bbHToGG_M-125_4FS_yb2" in s] #is this correct?
-#bbH = [s for s in files if "output_bbHToGG_M-125_4FS_ybyt" in s] #second file in 2016 year
+bbH = [s for s in files if "output_bbHToGG_M-125_4FS_yb2" in s] 
 ttH = [s for s in files if "output_ttHToGG_" in s]
-#vbf2 = [s for s in files if "output_VBFHToGG_M125_13TeV_amcatnlo_pythia8_st_cuts" in s]
 ggJets_lowPt2 = [s for s in files if "output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8" in s]
 gJets_highPt2 = [s for s in files if "output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8" in s]
+bbH2 = [s for s in files if "output_bbHToGG_M-125_4FS_ybyt" in s]
 
-Data= [s for s in files if "DoubleEG" in s]
+Data= [s for s in files if "Data" in s]
 
 utils.IO.add_signal(ntuples,signal,1)
 print diphotonJets
@@ -52,11 +51,12 @@ utils.IO.add_background(ntuples,ttH,-7)
 #utils.IO.add_background(ntuples,vbf2,-8)
 utils.IO.add_background(ntuples,gJets_lowPt,-8)
 utils.IO.add_background(ntuples,gJets_highPt,-9)
+utils.IO.add_background(ntuples,bbH2,-10)
 
 nBkg = len(utils.IO.backgroundName)
 print nBkg
 
-utils.IO.add_data(ntuples,Data,-10)
+utils.IO.add_data(ntuples,Data,-11)
 
 #add all nodes
 nodes = []
@@ -73,12 +73,12 @@ for i in range(len(utils.IO.signalName)):
     print "using signal file n."+str(i)+": "+utils.IO.signalName[i]
 print "using data file: "+ utils.IO.dataName[0]
 
-
-#use noexpand for root expressions, it needs this file https://github.com/ibab/root_pandas/blob/master/root_pandas/readwrite.py
-#all the branches you want to save in new trees
 #st values with adding pt_gg/m_gg, pt_jj/M_jj
-#branch_names = 'absCosThetaStar_CS,absCosTheta_bb,absCosTheta_gg,PhoJetMinDr,customLeadingPhotonIDMVA,customSubLeadingPhotonIDMVA,leadingJet_DeepCSV,subleadingJet_DeepCSV,leadingPhotonSigOverE,subleadingPhotonSigOverE,sigmaMOverM,diphotonCandidatePtOverdiHiggsM,dijetCandidatePtOverdiHiggsM,leadingJet_bRegNNResolution,subleadingJet_bRegNNResolution,noexpand:sigmaMJets/Mjj,noexpand:leadingPhoton_pt/CMS_hgg_mass,noexpand:subleadingPhoton_pt/CMS_hgg_mass,noexpand:leadingJet_pt/Mjj,noexpand:subleadingJet_pt/Mjj,PhoJetotherDr'.split(",")
-branch_names = 'absCosThetaStar_CS,absCosTheta_bb,absCosTheta_gg,PhoJetMinDr,customLeadingPhotonIDMVA,customSubLeadingPhotonIDMVA,leadingJet_DeepCSV,subleadingJet_DeepCSV,leadingPhotonSigOverE,subleadingPhotonSigOverE,sigmaMOverM,diphotonCandidatePtOverdiHiggsM,dijetCandidatePtOverdiHiggsM,leadingJet_bRegNNResolution,subleadingJet_bRegNNResolution,noexpand:sigmaMJets/Mjj,noexpand:leadingPhoton_pt/CMS_hgg_mass,noexpand:subleadingPhoton_pt/CMS_hgg_mass,noexpand:leadingJet_pt/Mjj,noexpand:subleadingJet_pt/Mjj,PhoJetotherDr,Mjj'.split(",")
+#DeepCSV
+##branch_names = 'absCosThetaStar_CS,absCosTheta_bb,absCosTheta_gg,PhoJetMinDr,customLeadingPhotonIDMVA,customSubLeadingPhotonIDMVA,leadingJet_DeepCSV,subleadingJet_DeepCSV,leadingPhotonSigOverE,subleadingPhotonSigOverE,sigmaMOverM,diphotonCandidatePtOverdiHiggsM,dijetCandidatePtOverdiHiggsM,leadingJet_bRegNNResolution,subleadingJet_bRegNNResolution,noexpand:sigmaMJets/Mjj,noexpand:leadingPhoton_pt/CMS_hgg_mass,noexpand:subleadingPhoton_pt/CMS_hgg_mass,noexpand:leadingJet_pt/Mjj,noexpand:subleadingJet_pt/Mjj,PhoJetotherDr'.split(",")
+#DeepJet
+branch_names = 'absCosThetaStar_CS,absCosTheta_bb,absCosTheta_gg,PhoJetMinDr,customLeadingPhotonIDMVA,customSubLeadingPhotonIDMVA,leadingJet_DeepFlavour,subleadingJet_DeepFlavour,leadingPhotonSigOverE,subleadingPhotonSigOverE,sigmaMOverM,diphotonCandidatePtOverdiHiggsM,dijetCandidatePtOverdiHiggsM,leadingJet_bRegNNResolution,subleadingJet_bRegNNResolution,noexpand:sigmaMJets/Mjj,noexpand:leadingPhoton_pt/CMS_hgg_mass,noexpand:subleadingPhoton_pt/CMS_hgg_mass,noexpand:leadingJet_pt/Mjj,noexpand:subleadingJet_pt/Mjj,PhoJetOtherDr'.split(",")
+
 
 branch_names = [c.strip() for c in branch_names]
 print branch_names
@@ -102,8 +102,7 @@ from sklearn.externals import joblib
 ###########
 #st with add ptMgg+ptMjj+dR
 ##2016
-#loaded_model = joblib.load(os.path.expanduser('/eos/user/i/ivovtin/HHggbb/HHbbggTraining/Training/output_files/2016/st_ptmgg_ptmjj_dR/simlple_Test_binary_st.pkl'))
-loaded_model = joblib.load(os.path.expanduser('/eos/user/i/ivovtin/HHggbb/HHbbggTraining/Training/output_files/2016/st_MC_Bkg_ptmgg_ptmjj_dR_with_Mjj/simlple_Test_binary_st.pkl'))
+loaded_model = joblib.load(os.path.expanduser('/eos/user/i/ivovtin/HHggbb/HHbbggTraining/Training/output_files/2016/dev_legecy_runII_ptmgg_ptmjj_dR/simlple_Test_binary_st.pkl'))
 
 print len(utils.IO.backgroundName)
 bkg = []
@@ -126,10 +125,9 @@ print Y_pred_data
 #Adding additional variables needed
 import os
 #st + pt/mgg, OR + ptMjj+dR
-#additionalCut_names = 'MX,Mjj,CMS_hgg_mass'.split(",")
-additionalCut_names = 'MX,CMS_hgg_mass'.split(",")
+additionalCut_names = 'MX,Mjj,CMS_hgg_mass'.split(",")
 #st + pt/mgg+pt/mjj+dR 
-outTag = 'Hggbb/reduceTree_2016_mjj/reduceTree_st_variables_add_ptmgg_ptmjj_dR_mjj'
+outTag = 'Hggbb/legacy_branch_flattrees/reduceTree_st_ptmgg_ptmjj_dR_2016'
 #outTag = 'Hggbb'
 outDir=os.path.expanduser("/afs/cern.ch/work/i/ivovtin/"+outTag)
 if not os.path.exists(outDir):
@@ -190,12 +188,12 @@ for iProcess in range(0,len(utils.IO.backgroundName)):
 
     nTot,dictVar = postprocessing.stackFeatures(bkg_count_df,branch_names+additionalCut_names)
 
-    processPath=os.path.expanduser('/afs/cern.ch/work/i/ivovtin/')+outTag+'/'+utils.IO.backgroundName[iProcess].split("/")[len(utils.IO.backgroundName[8].split("/"))-1].replace("output_","").replace(".root","")+"_preselection"+".root"
+    processPath=os.path.expanduser('/afs/cern.ch/work/i/ivovtin/')+outTag+'/'+utils.IO.backgroundName[iProcess].split("/")[len(utils.IO.backgroundName[9].split("/"))-1].replace("output_","").replace(".root","")+"_preselection"+".root"
     postprocessing.saveTree(processPath,dictVar,nTot,Y_pred_bkg[iSample])    
 
-    processPath=os.path.expanduser('/afs/cern.ch/work/i/ivovtin/')+outTag+'/'+utils.IO.backgroundName[iProcess].split("/")[len(utils.IO.backgroundName[8].split("/"))-1].replace("output_","").replace(".root","")+"_preselection_diffNaming"+".root"
+    processPath=os.path.expanduser('/afs/cern.ch/work/i/ivovtin/')+outTag+'/'+utils.IO.backgroundName[iProcess].split("/")[len(utils.IO.backgroundName[9].split("/"))-1].replace("output_","").replace(".root","")+"_preselection_diffNaming"+".root"
     if "GluGluToHHTo2B2G_node_SM_13TeV_madgraph_13TeV_DoubleHTag_0"in processPath:
-        treeName = "reducedTree_sig_node_"+str(iProcess-6)
+        treeName = "reducedTree_sig_node_"+str(iProcess-7)
     else:
         treeName = "reducedTree_bkg_"+str(iProcess)
     
