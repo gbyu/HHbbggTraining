@@ -1,17 +1,25 @@
 void prepare_flat_trees()
 {
+    //=============================================================================================================================
     int N=11;  //for cuts need set N=4; for flat trees with PhoJetOtherdR set N=11 
-    int tag=2016;    
-    TString dir_in = "/afs/cern.ch/user/i/ivovtin/workarea/Hggbb/legacy_branch_flattrees/2016/";
+    int tag=2017;    
+    //2
+    TString dir_in = "/afs/cern.ch/user/i/ivovtin/workarea/Hggbb/legacy_branch_flattrees/2017/";
+    //TString dir_in = "/afs/cern.ch/user/i/ivovtin/workarea/Hggbb/legacy_branch_flattrees/2016/";
     //out directoty with PhoJetOtherdR cuts for MC
+    //1 
+    //TString dir_out = "/afs/cern.ch/user/i/ivovtin/workarea/Hggbb/legacy_branch_flattrees/flattrees_legacy_cuts_2017/";
     //TString dir_out = "/afs/cern.ch/user/i/ivovtin/workarea/Hggbb/legacy_branch_flattrees/flattrees_legacy_cuts_2016/";
     //out directory with PhoJetOtherdR in flat trees
-    TString dir_out = "/afs/cern.ch/user/i/ivovtin/workarea/Hggbb/legacy_branch_flattrees/flattrees_2016_withdR/";
+    TString dir_out = "/afs/cern.ch/user/i/ivovtin/workarea/Hggbb/legacy_branch_flattrees/flattrees_2017_withdR/";
+    //TString dir_out = "/afs/cern.ch/user/i/ivovtin/workarea/Hggbb/legacy_branch_flattrees/flattrees_2016_withdR/";
 
     TString Cuts = "";
     //TString Cuts = "leadingPhoton_pt/CMS_hgg_mass>1/3 && subleadingPhoton_pt/CMS_hgg_mass>1/4 && leadingJet_pt>25 && subleadingJet_pt>25 && CMS_hgg_mass>100 && CMS_hgg_mass<180 && Mjj>70 && Mjj<190 && PhoJetMinDr>0.4 && leadingJet_DeepCSV>0 && subleadingJet_DeepCSV>0 && leadingPhoton_eta>-2.5 && leadingPhoton_eta<2.5 && subleadingPhoton_eta>-2.5 && subleadingPhoton_eta<2.5 && leadingJet_eta>-2.4 && leadingJet_eta<2.4 && subleadingJet_eta>-2.4 && subleadingJet_eta<2.4  && leadingJet_pt/Mjj>1/4 && subleadingJet_pt/Mjj>1/4";
+   
+    //=============================================================================================================================
 
-  for(int i=10; i<N; i++)
+  for(int i=9; i<N; i++)
   {
      TString fname;
      //1 change
@@ -27,8 +35,7 @@ void prepare_flat_trees()
      if(i==6) fname ="output_VHToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8.root";
      if(i==7) fname ="output_ttHToGG_M125_13TeV_powheg_pythia8.root";
      if(i==8) fname ="output_bbHToGG_M-125_4FS_yb2_13TeV_amcatnlo.root";
-     if(i==9 && tag==2016) fname ="output_bbHToGG_M-125_4FS_ybyt_13TeV_amcatnlo.root";
-     if(i==9 && tag==2017) fname ="output_bbHToGG_M-125_4FS_ybyt_TuneCP5_13TeV-amcatnlo-pythia8.root";
+     if(i==9) fname ="output_bbHToGG_M-125_4FS_ybyt_13TeV_amcatnlo.root";
      if(i==10) fname ="Data.root";
    
      TFile *input = TFile::Open(dir_in + fname);
@@ -54,8 +61,7 @@ void prepare_flat_trees()
      if(i==6) newfile = new TFile(dir_out + "output_VHToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8.root","recreate");
      if(i==7) newfile = new TFile(dir_out + "output_ttHToGG_M125_13TeV_powheg_pythia8.root","recreate");
      if(i==8) newfile = new TFile(dir_out + "output_bbHToGG_M-125_4FS_yb2_13TeV_amcatnlo.root","recreate");
-     if(i==9 && tag==2016) newfile = new TFile(dir_out + "output_bbHToGG_M-125_4FS_ybyt_13TeV_amcatnlo.root","recreate");
-     if(i==9 && tag==2017) newfile = new TFile(dir_out + "output_bbHToGG_M-125_4FS_ybyt_TuneCP5_13TeV-amcatnlo-pythia8.root","recreate");
+     if(i==9) newfile = new TFile(dir_out + "output_bbHToGG_M-125_4FS_ybyt_13TeV_amcatnlo.root","recreate");
      if(i==10) newfile = new TFile(dir_out + "Data.root","recreate");
 
      //Standart cuts + pt/Mjj>1/4   
