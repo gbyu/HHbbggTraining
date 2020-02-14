@@ -33,8 +33,8 @@ def main(options,args):
     xlow = 0.
     xup = 1.
     histoMVA = ROOT.TH1F("histoMVA","histoMVA",nbins,xlow,xup)
-#    tree.Draw("MVAOutput>>histoMVA",ROOT.TCut("weight"))
-    tree.Draw("MVAOutput>>histoMVA")
+    tree.Draw("MVAOutput>>histoMVA",ROOT.TCut("weight"))
+#    tree.Draw("MVAOutput>>histoMVA")
 #    histoMVA.FillRandom("gaus",1000000)
 
     cumulativeHisto = histoMVA.GetCumulative()
@@ -95,6 +95,7 @@ def main(options,args):
         "reducedTree_bkg_8",
         "reducedTree_bkg_9",
         "reducedTree_bkg_10"
+        #"reducedTree_bkg_11"
         ]
 
     fin = ROOT.TFile.Open(options.file)
@@ -134,6 +135,8 @@ def main(options,args):
           chain = ROOT.TChain("reducedTree_bkg_9")
         elif proc=="reducedTree_bkg_10":
           chain = ROOT.TChain("reducedTree_bkg_10")
+        #elif proc=="reducedTree_bkg_11":
+        #  chain = ROOT.TChain("reducedTree_bkg_11")
         else:
           chain = ROOT.TChain("reducedTree_bkg_2")
 
