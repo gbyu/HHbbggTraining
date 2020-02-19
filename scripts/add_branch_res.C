@@ -1,16 +1,17 @@
 void add_branch_res()
 {  
-   TString indirFT = "/afs/cern.ch/work/i/ivovtin/Hggbb/legacy_branch_flattrees/flattrees_2016_withdR/";
-   TString outdirFT = "/afs/cern.ch/work/i/ivovtin/public/legacy_branch_flattrees/2016/";
+   TString indirFT = "/afs/cern.ch/work/i/ivovtin/Hggbb/legacy_branch_flattrees/flattrees_2018_withdR/";
+   TString outdirFT = "/afs/cern.ch/work/i/ivovtin/public/legacy_branch_flattrees/rho_rew_2018_v2/";
+   //TString outdirFT = "/eos/user/i/ivovtin/HHggbb/";
    TString indirtrMVA = "/afs/cern.ch/work/i/ivovtin/Hggbb/";
-   TString fnameAll = indirtrMVA + "legacy_branch_flattrees/reduceTree_st_ptmgg_ptmjj_dR_2016/Total_preselection_diffNaming_transformedMVA.root"; 
+   TString fnameAll = indirtrMVA + "legacy_branch_flattrees/reduceTree_rho_rew_2018/Total_preselection_diffNaming_transformedMVA.root"; 
 
    //2016
-   TString GJet_Pt1 = "output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8.root";
-   TString GJet_Pt2 = "output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8.root";
-   //2017
-   //TString GJet_Pt1 = "output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8.root";
-   //TString GJet_Pt2 = "output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8.root";
+   //TString GJet_Pt1 = "output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8.root";
+   //TString GJet_Pt2 = "output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8.root";
+   //2017 and 2018
+   TString GJet_Pt1 = "output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8.root";
+   TString GJet_Pt2 = "output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8.root";
 
    //==========================================
 
@@ -35,7 +36,9 @@ void add_branch_res()
    float MVASigTr,MVADataTr,MVA0Tr,MVA1Tr,MVA2Tr,MVA3Tr,MVA4Tr,MVA5Tr,MVA6Tr,MVA7Tr,MVA8Tr,MVA9Tr,MVA10Tr,MVA11Tr;
    float MVAoldSigTr,MVAoldDataTr,MVAold0Tr,MVAold1Tr,MVAold2Tr,MVAold3Tr,MVAold4Tr,MVAold5Tr,MVAold6Tr,MVAold7Tr,MVAold8Tr,MVAold9Tr,MVAold10Tr,MVAold11Tr;
    
-   TString fnameSig = indirFT + "output_GluGluToHHTo2B2G_node_SM_13TeV-madgraph.root"; 
+   //TString fnameSig = indirFT + "output_GluGluToHHTo2B2G_node_SM_13TeV-madgraph.root"; 
+   //TString fnameSig = indirFT + "output_GluGluToHHTo2B2G_allnodes.root"; 
+   TString fnameSig = indirFT + "output_GluGluToHHTo2B2G_allnodes_2018_no_unit_norm.root"; 
    TString fnamedata = indirFT + "Data.root"; 
    //bkg
    TString fname0 = indirFT + "output_DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa.root"; 
@@ -44,8 +47,8 @@ void add_branch_res()
    TString fname5 = indirFT + "output_VHToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8.root"; 
    TString fname6 = indirFT + "output_bbHToGG_M-125_4FS_yb2_13TeV_amcatnlo.root";           
    TString fname7 = indirFT + "output_ttHToGG_M125_13TeV_powheg_pythia8.root"; 
-   TString fname9 = indirFT + "output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8.root"; 
-   TString fname10 = indirFT + "output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8.root";
+   TString fname9 = indirFT + GJet_Pt1; 
+   TString fname10 = indirFT + GJet_Pt2;
    TString fname11 = indirFT + "output_bbHToGG_M-125_4FS_ybyt_13TeV_amcatnlo.root"; 
    
    
@@ -91,7 +94,8 @@ void add_branch_res()
 
    //3 change
    //Signal
-   TFile *newfileSig = new TFile(outdirFT + "output_GluGluToHHTo2B2G_node_SM_13TeV-madgraph.root","recreate");   
+   //TFile *newfileSig = new TFile(outdirFT + "output_GluGluToHHTo2B2G_node_SM_13TeV-madgraph.root","recreate");   
+   TFile *newfileSig = new TFile(outdirFT + "output_GluGluToHHTo2B2G_allnodes_no_unit_norm.root","recreate");   
    TTree *newtreeSig = MCSigTree1->CloneTree();   
    TBranch *brMVASig = newtreeSig->Branch("MVAOutputTransformed",&MVASig,"MVAOutputTransformed/F"); 
    sigtree->SetBranchAddress("MVAOutputTransformed",&MVAoldSig); 
