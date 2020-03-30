@@ -165,7 +165,8 @@ def xgbtree_to_nodetree(tree):
         if match is not None:
             node_index = int(match.group(1))
             node_variable, threshold = match.group(2).split("<")
-            node_variable = int(node_variable.replace("f", ""))
+            print node_variable
+            #node_variable = int(node_variable.replace("f", ""))
             threshold = float(threshold)
             is_node = True
 
@@ -396,12 +397,12 @@ class BDTxgboost(BDT):
         
         
 #        do this to check attributes
-#        from pprint import pprint
-#        pprint(vars(model))
+        from pprint import pprint
+        pprint(vars(model))
 
-#        for tree_dump in model.booster().get_dump(): #in some versions it doesn't work 
-        for i in range(3): 
-             print model._Booster.get_dump()[i]
+        for tree_dump in model.get_booster().get_dump():  print tree_dump #in some versions it doesn't work 
+#        for i in range(5): 
+#             print model._Booster.get_dump()[i]
         for tree_dump in model._Booster.get_dump(): 
             treeindex+=1
           #  if kind == "multiclass":
