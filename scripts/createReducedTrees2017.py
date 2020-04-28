@@ -19,8 +19,11 @@ reload(plotting)
 reload(optimization)
 reload(postprocessing)
 
-#ntuples = 'legacy_branch_flattrees/synch/2018'
-ntuples = 'WithBTagReweight/flattrees_2018'
+#ntuples = 'legacy_branch_flattrees/synch/2017'
+ntuples = 'WithBTagReweight/flattrees_2017'
+# "%" sign allows to interpret the rest as a system command
+#%env data=$utils.IO.ldata$ntuples
+#files = ! ls $data | sort -t_ -k 3 -n
 get_ipython().magic(u'env data=$utils.IO.ldata$ntuples')
 files = get_ipython().getoutput(u'ls $data | sort -t_ -k 3 -n')
 #
@@ -61,6 +64,9 @@ utils.IO.add_data(ntuples,Data,-11)
 
 #add all nodes
 nodes = []
+#for i in range(2,14):
+#    nodes.append([s for s in files if "output_GluGluToHHTo2B2G_node_SM_13TeV-madgraph_2016"+str(i) in s])
+##    nodes.append([s for s in files if "GluGluToHHTo2B2G_node_"+str(i) in s])
 for i in range(len(utils.IO.backgroundName),len(utils.IO.backgroundName)+len(nodes)):
     utils.IO.add_background(ntuples,nodes[i-nBkg],-i) 
     
@@ -100,14 +106,14 @@ X_data,y_data,weights_data = preprocessing.clean_signal_events_single_dataset(X_
 X_bkg,y_bkg,weights_bkg,X_sig,y_sig,weights_sig=preprocessing.clean_signal_events(X_bkg,y_bkg,weights_bkg,X_sig,y_sig,weights_sig)
 
 
-# load the model from disk
+# load the model from file
 from sklearn.externals import joblib
 ###########
 ###########
 #st with add ptMgg+ptMjj+dR
-#2018
-#loaded_model = joblib.load(os.path.expanduser('/eos/user/i/ivovtin/HHggbb/HHbbggTraining/Training/output_files/2018/dev_legecy_runII_ext_rho_rew_v3/simlple_Test_binary_st.pkl'))
-loaded_model = joblib.load(os.path.expanduser('/eos/user/i/ivovtin/HHggbb/HHbbggTraining/Training/output_files/2018/WithBTagReweight_v3/simlple_Test_binary_st.pkl'))
+#2017
+#loaded_model = joblib.load(os.path.expanduser('/eos/user/i/ivovtin/HHggbb/HHbbggTraining/Training/output_files/2017/dev_legecy_runII_ext_rho_rew_v4/simlple_Test_binary_st.pkl'))
+loaded_model = joblib.load(os.path.expanduser('/eos/user/i/ivovtin/HHggbb/HHbbggTraining/Training/output_files/2017/WithBTagReweight_v3/simlple_Test_binary_st.pkl'))
 
 print len(utils.IO.backgroundName)
 bkg = []
@@ -134,8 +140,9 @@ import os
 #st + pt/mgg, OR + ptMjj+dR
 additionalCut_names = 'MX,Mjj,CMS_hgg_mass'.split(",")
 #additionalCut_names = 'MX,CMS_hgg_mass'.split(",")
-#outTag = 'Hggbb/legacy_branch_flattrees/reduceTree_st_ptmgg_ptmjj_dR_2018'
-outTag = 'Hggbb/allTrainReduce/2018'
+#outTag = 'Hggbb/legacy_branch_flattrees/reduceTree_st_ptmgg_ptmjj_dR_2017'
+outTag = 'Hggbb/allTrainReduce/2017'
+#outTag = 'Hggbb/legacy_branch_flattrees/train_withMjj/reduceTree_st_Mjj_2017_v2'
 #outTag = 'Hggbb'
 outDir=os.path.expanduser("/afs/cern.ch/work/i/ivovtin/"+outTag)
 if not os.path.exists(outDir):

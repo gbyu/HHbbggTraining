@@ -11,7 +11,8 @@ import postprocessing_utils as postprocessing
 reload(postprocessing)
 from IPython import get_ipython
 
-ntuples = 'WithBTagReweight/withcuts/flattrees_legacy_cuts_2018'
+#ntuples = 'legacy_branch_flattrees/train_withMjj/flattrees_legacy_cuts_2017_woMjjcut'
+ntuples = 'WithBTagReweight/withcuts/flattrees_legacy_cuts_2017'
 # "%" sign allows to interpret the rest as a system command
 get_ipython().magic(u'env data=$utils.IO.ldata$ntuples')
 files = get_ipython().getoutput(u'ls $data | sort -t_ -k 3 -n')
@@ -119,7 +120,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 reload(plt)
 
-outTag = '2018/WithBTagReweight_v3/'
+outTag = '2017/WithBTagReweight_v3/'
+#save model to file
 joblib.dump(clf, os.path.expanduser(utils.IO.plotFolder+outTag+'simlple_Test_binary_st.pkl'), compress=9)
 
 #plotting.plot_input_variables(X_sig,X_bkg,branch_names)
