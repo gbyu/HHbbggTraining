@@ -1,6 +1,6 @@
 #include "TMVA/Reader.h"
 
-void Reader_xml_vbfhh2018(){
+void Reader_xml_nlo(){
 
 TString flashgg_data = "/eos/cms/store/group/phys_higgs/cmshgg/flashgg-data/Taggers/data/HHTagger/";
 TString indirMVA;
@@ -9,11 +9,12 @@ TString weightFile;
 TString weightFile2;
 
 //for (TString year : {"2016","2017","2018"}){
-TString year = "2018";
+for (TString year : {"2017","2018"}){
+//TString year = "2016";
 Float_t MVAscaling;
 
  if(year=="2016"){ 
-   indirMVA = "/afs/cern.ch/work/i/ivovtin/public/legacy_branch_flattrees/WithBTagReweight/2016/"; 
+   indirMVA = "/afs/cern.ch/work/i/ivovtin/public/legacy_branch_flattrees/NLO_2016/"; 
    dirOut = "/afs/cern.ch/work/i/ivovtin/public/legacy_branch_flattrees/synch/2016/";
    weightFile = flashgg_data + "training_with_18_12_2019_training0.weights.xml";  //with Mjj - ETH
    weightFile2 = flashgg_data + "training_with_18_12_2019_wo_Mjj_training0.weights.xml";  //w/o Mjj - ETH
@@ -21,7 +22,7 @@ Float_t MVAscaling;
  }
 
  if(year=="2017"){ 
-   indirMVA = "/afs/cern.ch/work/i/ivovtin/public/legacy_branch_flattrees/WithBTagReweight/2017/"; 
+   indirMVA = "/afs/cern.ch/work/i/ivovtin/public/legacy_branch_flattrees/NLO_2017/"; 
    dirOut = "/afs/cern.ch/work/i/ivovtin/public/legacy_branch_flattrees/synch/2017/";
    weightFile = flashgg_data + "training_with_18_12_2019_training1.weights.xml";  //with Mjj - ETH
    weightFile2 = flashgg_data + "training_with_18_12_2019_wo_Mjj_training1.weights.xml";  //w/o Mjj - ETH
@@ -29,8 +30,8 @@ Float_t MVAscaling;
  }
 
  if(year=="2018"){ 
-   indirMVA = "/afs/cern.ch/work/i/ivovtin/public/legacy_branch_flattrees/vbfhh/2018/vbf_nodes/"; 
-   dirOut = "/afs/cern.ch/work/i/ivovtin/public/legacy_branch_flattrees/vbfhh/2018/withMVA/";
+   indirMVA = "/afs/cern.ch/work/i/ivovtin/public/legacy_branch_flattrees/NLO_2018/"; 
+   dirOut = "/afs/cern.ch/work/i/ivovtin/public/legacy_branch_flattrees/synch/2018/";
    weightFile = flashgg_data + "training_with_18_12_2019_training2.weights.xml";  //with Mjj - ETH
    weightFile2 = flashgg_data + "training_with_18_12_2019_wo_Mjj_training2.weights.xml";  //w/o Mjj - ETH
    MVAscaling=1.0;
@@ -50,7 +51,15 @@ TGraph * MVAFlatteningCumulative2 = (TGraph*)MVAFlatteningFile2->Get("cumulative
 
 //TString Sig = "output_GluGluToHHTo2B2G_node_SM_13TeV-madgraph.root";
 //TString Sig = "output_GluGluToHHTo2B2G_allnodes_no_unit_norm.root";
-TString Sig = "output_GluGluToHHTo2B2G_all_nodes.root";
+//TString Sig = "output_GluGluToHHTo2B2G_all_nodes.root";
+//TString Sig1 = "output_GluGluToHHTo2B2G_node_cHHH1_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8.root"; //2016
+//TString Sig1 = "output_GluGluToHHTo2B2G_node_cHHH1_TuneCP5_PSWeights_13TeV-powheg-pythia8.root";   //2017,2018
+//TString Sig2 = "output_GluGluToHHTo2B2G_node_cHHH0_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8.root"; //2016
+TString Sig2 = "output_GluGluToHHTo2B2G_node_cHHH0_TuneCP5_PSWeights_13TeV-powheg-pythia8.root";    //2017, 2018
+//TString Sig3 = "output_GluGluToHHTo2B2G_node_cHHH2p45_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8.root"; //2016
+TString Sig3 = "output_GluGluToHHTo2B2G_node_cHHH2p45_TuneCP5_PSWeights_13TeV-powheg-pythia8.root"; //2017,2018
+//TString Sig4 = "output_GluGluToHHTo2B2G_node_cHHH5_TuneCUETP8M1_PSWeights_13TeV-powheg-pythia8.root"; //2016
+TString Sig4 = "output_GluGluToHHTo2B2G_node_cHHH5_TuneCP5_PSWeights_13TeV-powheg-pythia8.root";  //2017,2018
 TString Bkg1 ="output_DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa.root";
 TString Bkg2, Bkg3;
 if(year=="2016") Bkg2 ="output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8.root";
@@ -67,15 +76,11 @@ TString Bkg10 ="output_DiPhotonJetsBox1BJet_MGG-80toInf_13TeV-Sherpa.root";
 TString Bkg11 ="output_DiPhotonJetsBox2BJets_MGG-80toInf_13TeV-Sherpa.root";
 TString Data ="Data.root";
 TString VBFHH ="output_VBFHHTo2B2G_CV_1_C2V_1_C3_1_TuneCP5_PSWeights_13TeV-madgraph-pythia8.root";
-TString VBFHH1 ="output_VBFHHTo2B2G_CV_0_5_C2V_1_C3_1_TuneCP5_PSWeights_13TeV-madgraph-pythia8.root";
-TString VBFHH2 ="output_VBFHHTo2B2G_CV_1_5_C2V_1_C3_1_TuneCP5_PSWeights_13TeV-madgraph-pythia8.root";
-TString VBFHH3 ="output_VBFHHTo2B2G_CV_1_C2V_1_C3_0_TuneCP5_PSWeights_13TeV-madgraph-pythia8.root";
-TString VBFHH4 ="output_VBFHHTo2B2G_CV_1_C2V_1_C3_2_TuneCP5_PSWeights_13TeV-madgraph-pythia8.root";
-TString VBFHH5 ="output_VBFHHTo2B2G_CV_1_C2V_2_C3_1_TuneCP5_PSWeights_13TeV-madgraph-pythia8.root";
 
 //=================================================================================================================
 
-for (TString fname : {VBFHH1,VBFHH2,VBFHH3,VBFHH4,VBFHH5}){
+for (TString fname : {Sig2,Sig3,Sig4}){
+//for (TString fname : {VBFHH}){
 //for (TString fname : {Bkg10,Bkg11}){
 //for (TString fname : {Bkg2,Bkg3,Bkg4,Bkg5,Bkg6,Bkg7,Bkg10,Bkg11,Data}){
 //for (TString fname : {Sig,Bkg1,Bkg2,Bkg3,Bkg4,Bkg5,Bkg6,Bkg7,Bkg8,Bkg9,Bkg10,Bkg11,Data}){
@@ -171,9 +176,9 @@ for (TString fname : {VBFHH1,VBFHH2,VBFHH3,VBFHH4,VBFHH5}){
 
   Float_t absCosThetaStar_CS, absCosTheta_bb, absCosTheta_gg, PhoJetMinDr, customLeadingPhotonIDMVA, customSubLeadingPhotonIDMVA, leadingJet_DeepFlavour, subleadingJet_DeepFlavour, leadingPhotonSigOverE, subleadingPhotonSigOverE, sigmaMOverM, diphotonCandidatePtOverdiHiggsM, dijetCandidatePtOverdiHiggsM, leadingJet_bRegNNResolution, subleadingJet_bRegNNResolution, sigmaMJets, CMS_hgg_mass, leadingPhoton_pt, subleadingPhoton_pt, Mjj, leadingJet_pt, subleadingJet_pt, PhoJetOtherDr, rho;
 
-  TTree *resTree = (TTree*)inputAll->Get("bbggSelectionTree");
+  //TTree *resTree = (TTree*)inputAll->Get("bbggSelectionTree");
   //TTree *resTree = (TTree*)inputAll->Get("tagsDumper/trees/hh2016_13TeV_125_13TeV_DoubleHTag_0");
-  //TTree *resTree = (TTree*)inputAll->Get("tagsDumper/trees/bbggSelectionTree");
+  TTree *resTree = (TTree*)inputAll->Get("tagsDumper/trees/bbggSelectionTree");
   //resTree->Print();
 
   resTree->SetBranchAddress("absCosThetaStar_CS",&absCosThetaStar_CS);
@@ -214,6 +219,7 @@ for (TString fname : {VBFHH1,VBFHH2,VBFHH3,VBFHH4,VBFHH5}){
   Float_t BDT_response2;
   Float_t mvaScaled2;
   double flatMVA2;
+  //TBranch *xmlMVA = outTree->Branch("xmlMVA",&BDT_response,"xmlMVA/F");
   TBranch *xmlMVAtransf = outTree->Branch("MVAwithMjj",&flatMVA,"MVAwithMjj/D");
   TBranch *xmlMVAtransf2 = outTree->Branch("MVAwoMjj",&flatMVA2,"MVAwoMjj/D");
 
@@ -317,7 +323,7 @@ for (TString fname : {VBFHH1,VBFHH2,VBFHH3,VBFHH4,VBFHH5}){
   cout<<"Finish MVA calculation."<<endl;
 }
 
-//}
+}
 }
 
 

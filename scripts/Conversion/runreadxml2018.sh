@@ -5,4 +5,4 @@ eval `scramv1 runtime -sh`
 echo "CMSSW: "$CMSSW_BASE
 #Run your program
 cd /afs/cern.ch/user/i/ivovtin/HHggbb/HHbbggTraining/scripts/Conversion/
-root -b -l -q Reader_xml_2018.C
+root -b -l -q Reader_xml_vbfhh2018.C
