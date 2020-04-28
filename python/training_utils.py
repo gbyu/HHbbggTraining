@@ -8,8 +8,10 @@ import random
 
 # ---------------------------------------------------------------------------------------------------
 class IO:
-    #ldata = os.path.expanduser("/afs/cern.ch/work/i/ivovtin/public/Hggbb/")
-    ldata = os.path.expanduser("/eos/user/i/ivovtin/HHggbb/HHbbggTraining/Training/input_files_with_cuts/")
+    #ldata = os.path.expanduser("/afs/cern.ch/work/i/ivovtin/public/")
+    #ldata = os.path.expanduser("/eos/user/i/ivovtin/HHggbb/HHbbggTraining/Training/input_files_with_cuts/")
+    #legacy
+    ldata = os.path.expanduser("/afs/cern.ch/work/i/ivovtin/Hggbb/")
     xdata = "/afs/cern.ch/user/i/ivovtin/HHggbb/HHbbggTraining/output_files/"
     plotFolder = os.path.expanduser("/eos/user/i/ivovtin/HHggbb/HHbbggTraining/Training/output_files/")
     signalName = []
