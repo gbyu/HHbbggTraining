@@ -2,10 +2,10 @@
 #universe = parallel  #the HTCondor "Parallel Universe" is not supported at CERN 
 universe = vanilla
 #The fully qualified name of the executable to be run
-executable = jobtrain1.sh
+executable = jobtrain2017.sh
 #Any arguments that are to be passed to the executable
 arguments = $(ClusterId)$(ProcId)
-RequestCpus = 8
+#RequestCpus = 8
 #RequestCpus = 30
 # espresso     = 20 minutes  - default!
 # microcentury = 1 hour
@@ -15,8 +15,8 @@ RequestCpus = 8
 # testmatch    = 3 days
 # nextweek     = 1 week
 #+JobFlavour = "espresso"
-#+JobFlavour = "tomorrow"
-+JobFlavour = "workday"
++JobFlavour = "tomorrow"
+#+JobFlavour = "workday"
 #By default this the time corresponding to the espresso JobFlavour. The maximum is 1 week, or 604800 seconds.
 #+MaxRuntime = 604800
 #1 days 
@@ -36,7 +36,7 @@ log = log/classif.$(ClusterId).log
 should_transfer_files = YES
 when_to_transfer_output = ON_EXIT
 transfer_output = True
-transfer_input_files = trainMVAHHbbgg_ptmgg_ptmjj_dR.py
+transfer_input_files = trainMVAHHbbgg2017.py
 #+JobFlavour = "espresso"
 #This command submits the job
 queue

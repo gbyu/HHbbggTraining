@@ -73,6 +73,9 @@ def saveTree(processPath,dictVar,vector,MVAVector=None,SF=1,nameTree="reducedTre
          if SF != 1:
              if key == 'weight':
                  v = (np.multiply(np.asarray(v),SF))
+         
+         print v
+         print name
 
          v.dtype = [(name.replace(".","").replace("(","").replace(")","").replace("/","_Over_").replace("_","").replace("Candidate",""), np.float64)]
 

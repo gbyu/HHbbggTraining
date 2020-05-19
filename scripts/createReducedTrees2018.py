@@ -19,12 +19,13 @@ reload(plotting)
 reload(optimization)
 reload(postprocessing)
 
-ntuples = 'legacy_branch_flattrees/flattrees_2018_withdR'
+#ntuples = 'legacy_branch_flattrees/synch/2018'
+ntuples = 'WithBTagReweight/flattrees_2018'
 get_ipython().magic(u'env data=$utils.IO.ldata$ntuples')
 files = get_ipython().getoutput(u'ls $data | sort -t_ -k 3 -n')
 #
 #signal = [s for s in files if "output_GluGluToHHTo2B2G_node_SM_13TeV-madgraph" in s]
-signal = [s for s in files if "output_GluGluToHHTo2B2G_allnodes_2018_no_unit_norm" in s]
+signal = [s for s in files if "output_GluGluToHHTo2B2G_allnodes_no_unit_norm.root" in s]
 diphotonJets = [s for s in files if "output_DiPhotonJetsBox_" in s]
 gJets_lowPt = [s for s in files if "output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8" in s]
 gJets_highPt = [s for s in files if "output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8" in s]
@@ -77,7 +78,7 @@ print "using data file: "+ utils.IO.dataName[0]
 #DeepCSV
 #branch_names = 'absCosThetaStar_CS,absCosTheta_bb,absCosTheta_gg,PhoJetMinDr,customLeadingPhotonIDMVA,customSubLeadingPhotonIDMVA,leadingJet_DeepCSV,subleadingJet_DeepCSV,leadingPhotonSigOverE,subleadingPhotonSigOverE,sigmaMOverM,diphotonCandidatePtOverdiHiggsM,dijetCandidatePtOverdiHiggsM,leadingJet_bRegNNResolution,subleadingJet_bRegNNResolution,noexpand:sigmaMJets/Mjj,noexpand:leadingPhoton_pt/CMS_hgg_mass,noexpand:subleadingPhoton_pt/CMS_hgg_mass,noexpand:leadingJet_pt/Mjj,noexpand:subleadingJet_pt/Mjj,PhoJetotherDr'.split(",")
 #DeepJet
-branch_names = 'absCosThetaStar_CS,absCosTheta_bb,absCosTheta_gg,PhoJetMinDr,customLeadingPhotonIDMVA,customSubLeadingPhotonIDMVA,leadingJet_DeepFlavour,subleadingJet_DeepFlavour,leadingPhotonSigOverE,subleadingPhotonSigOverE,sigmaMOverM,diphotonCandidatePtOverdiHiggsM,dijetCandidatePtOverdiHiggsM,leadingJet_bRegNNResolution,subleadingJet_bRegNNResolution,sigmaMJets,noexpand:leadingPhoton_pt/CMS_hgg_mass,noexpand:subleadingPhoton_pt/CMS_hgg_mass,noexpand:leadingJet_pt/Mjj,noexpand:subleadingJet_pt/Mjj,PhoJetOtherDr,rho'.split(",")
+branch_names = 'absCosThetaStar_CS,absCosTheta_bb,absCosTheta_gg,PhoJetMinDr,customLeadingPhotonIDMVA,customSubLeadingPhotonIDMVA,leadingJet_DeepFlavour,subleadingJet_DeepFlavour,leadingPhotonSigOverE,subleadingPhotonSigOverE,sigmaMOverM,diphotonCandidatePtOverdiHiggsM,dijetCandidatePtOverdiHiggsM,leadingJet_bRegNNResolution,subleadingJet_bRegNNResolution,sigmaMJets,noexpand:leadingPhoton_pt/CMS_hgg_mass,noexpand:subleadingPhoton_pt/CMS_hgg_mass,noexpand:leadingJet_pt/Mjj,noexpand:subleadingJet_pt/Mjj,PhoJetOtherDr2,rho'.split(",")
 #DeepJet + Mjj
 #branch_names = 'absCosThetaStar_CS,absCosTheta_bb,absCosTheta_gg,PhoJetMinDr,customLeadingPhotonIDMVA,customSubLeadingPhotonIDMVA,leadingJet_DeepFlavour,subleadingJet_DeepFlavour,leadingPhotonSigOverE,subleadingPhotonSigOverE,sigmaMOverM,diphotonCandidatePtOverdiHiggsM,dijetCandidatePtOverdiHiggsM,leadingJet_bRegNNResolution,subleadingJet_bRegNNResolution,noexpand:sigmaMJets,Mjj,rho'.split(",")
 
@@ -105,9 +106,8 @@ from sklearn.externals import joblib
 ###########
 #st with add ptMgg+ptMjj+dR
 #2018
-#loaded_model = joblib.load(os.path.expanduser('/eos/user/i/ivovtin/HHggbb/HHbbggTraining/Training/output_files/2018/dev_legecy_runII_ptmgg_ptmjj_dR/simlple_Test_binary_st.pkl'))
-#loaded_model = joblib.load(os.path.expanduser('/eos/user/i/ivovtin/HHggbb/HHbbggTraining/Training/output_files/2018/dev_legecy_runII_Mjj_woMjjcut_v2/simlple_Test_binary_st.pkl'))
-loaded_model = joblib.load(os.path.expanduser('/eos/user/i/ivovtin/HHggbb/HHbbggTraining/Training/output_files/2018/dev_legecy_runII_ext_rho_rew_v3/simlple_Test_binary_st.pkl'))
+#loaded_model = joblib.load(os.path.expanduser('/eos/user/i/ivovtin/HHggbb/HHbbggTraining/Training/output_files/2018/dev_legecy_runII_ext_rho_rew_v3/simlple_Test_binary_st.pkl'))
+loaded_model = joblib.load(os.path.expanduser('/eos/user/i/ivovtin/HHggbb/HHbbggTraining/Training/output_files/2018/WithBTagReweight_v3/simlple_Test_binary_st.pkl'))
 
 print len(utils.IO.backgroundName)
 bkg = []
@@ -135,8 +135,7 @@ import os
 additionalCut_names = 'MX,Mjj,CMS_hgg_mass'.split(",")
 #additionalCut_names = 'MX,CMS_hgg_mass'.split(",")
 #outTag = 'Hggbb/legacy_branch_flattrees/reduceTree_st_ptmgg_ptmjj_dR_2018'
-outTag = 'Hggbb/legacy_branch_flattrees/reduceTree_rho_rew_2018'
-#outTag = 'Hggbb/legacy_branch_flattrees/train_withMjj/reduceTree_st_Mjj_2018_v2'
+outTag = 'Hggbb/allTrainReduce/2018'
 #outTag = 'Hggbb'
 outDir=os.path.expanduser("/afs/cern.ch/work/i/ivovtin/"+outTag)
 if not os.path.exists(outDir):

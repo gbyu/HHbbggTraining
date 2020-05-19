@@ -11,19 +11,20 @@ import postprocessing_utils as postprocessing
 reload(postprocessing)
 from IPython import get_ipython
 
-#ntuples = 'legacy_branch_flattrees/flattrees_legacy_cuts_2016'
-ntuples = 'legacy_branch_flattrees/flattrees_legacy_cuts_2017'
+#ntuples = 'legacy_branch_flattrees/train_withMjj/flattrees_legacy_cuts_2016_woMjjcut'
+ntuples = 'WithBTagReweight/withcuts/flattrees_legacy_cuts_2016'
 # "%" sign allows to interpret the rest as a system command
 get_ipython().magic(u'env data=$utils.IO.ldata$ntuples')
 files = get_ipython().getoutput(u'ls $data | sort -t_ -k 3 -n')
-signal = [s for s in files if "output_GluGluToHHTo2B2G_node_SM_13TeV-madgraph.root" in s]
+#signal = [s for s in files if "output_GluGluToHHTo2B2G_node_SM_13TeV-madgraph.root" in s]
+signal = [s for s in files if "output_GluGluToHHTo2B2G_allnodes_no_unit_norm.root" in s]
 diphotonJets = [s for s in files if "output_DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa.root" in s]
 #2016
 gJets_lowPt = [s for s in files if "output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8.root" in s]
 gJets_highPt = [s for s in files if "output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8.root" in s]
-#2017
-#gJets_lowPt = [s for s in files if "output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8_st_cuts.root" in s]
-#gJets_highPt = [s for s in files if "output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8_st_cuts.root" in s]
+#2017 and 2018
+#gJets_lowPt = [s for s in files if "output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8.root" in s]
+#gJets_highPt = [s for s in files if "output_GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8.root" in s]
 #
 
 utils.IO.add_signal(ntuples,signal,1)
@@ -39,7 +40,12 @@ for i in range(len(utils.IO.signalName)):
 
 #use noexpand for root expressions, it needs this file https://github.com/ibab/root_pandas/blob/master/root_pandas/readwrite.py
 #st values with adding pt_gg/m_gg, pt_jj/M_jj
-branch_names = 'absCosThetaStar_CS,absCosTheta_bb,absCosTheta_gg,PhoJetMinDr,customLeadingPhotonIDMVA,customSubLeadingPhotonIDMVA,leadingJet_DeepFlavour,subleadingJet_DeepFlavour,leadingPhotonSigOverE,subleadingPhotonSigOverE,sigmaMOverM,diphotonCandidatePtOverdiHiggsM,dijetCandidatePtOverdiHiggsM,leadingJet_bRegNNResolution,subleadingJet_bRegNNResolution,noexpand:sigmaMJets/Mjj,noexpand:leadingPhoton_pt/CMS_hgg_mass,noexpand:subleadingPhoton_pt/CMS_hgg_mass,noexpand:leadingJet_pt/Mjj,noexpand:subleadingJet_pt/Mjj,PhoJetOtherDr'.split(",")
+#DeepCSV
+#branch_names = 'absCosThetaStar_CS,absCosTheta_bb,absCosTheta_gg,PhoJetMinDr,customLeadingPhotonIDMVA,customSubLeadingPhotonIDMVA,leadingJet_DeepCSV,subleadingJet_DeepCSV,leadingPhotonSigOverE,subleadingPhotonSigOverE,sigmaMOverM,diphotonCandidatePtOverdiHiggsM,dijetCandidatePtOverdiHiggsM,leadingJet_bRegNNResolution,subleadingJet_bRegNNResolution,noexpand:sigmaMJets/Mjj,noexpand:leadingPhoton_pt/CMS_hgg_mass,noexpand:subleadingPhoton_pt/CMS_hgg_mass,noexpand:leadingJet_pt/Mjj,noexpand:subleadingJet_pt/Mjj,PhoJetOtherDr'.split(",")
+#DeepJet
+branch_names = 'absCosThetaStar_CS,absCosTheta_bb,absCosTheta_gg,PhoJetMinDr,customLeadingPhotonIDMVA,customSubLeadingPhotonIDMVA,leadingJet_DeepFlavour,subleadingJet_DeepFlavour,leadingPhotonSigOverE,subleadingPhotonSigOverE,sigmaMOverM,diphotonCandidatePtOverdiHiggsM,dijetCandidatePtOverdiHiggsM,leadingJet_bRegNNResolution,subleadingJet_bRegNNResolution,sigmaMJets,noexpand:leadingPhoton_pt/CMS_hgg_mass,noexpand:subleadingPhoton_pt/CMS_hgg_mass,noexpand:leadingJet_pt/Mjj,noexpand:subleadingJet_pt/Mjj,PhoJetOtherDr,rho'.split(",")
+#DeepJet + Mjj
+#branch_names = 'absCosThetaStar_CS,absCosTheta_bb,absCosTheta_gg,PhoJetMinDr,customLeadingPhotonIDMVA,customSubLeadingPhotonIDMVA,leadingJet_DeepFlavour,subleadingJet_DeepFlavour,leadingPhotonSigOverE,subleadingPhotonSigOverE,sigmaMOverM,diphotonCandidatePtOverdiHiggsM,dijetCandidatePtOverdiHiggsM,leadingJet_bRegNNResolution,subleadingJet_bRegNNResolution,sigmaMJets,Mjj,rho'.split(",")
 
 branch_names = [c.strip() for c in branch_names]
 print branch_names
@@ -52,9 +58,11 @@ for i in range(len(utils.IO.backgroundName)):
     print list_trees(utils.IO.backgroundName[i])
         
 preprocessing.set_signals_and_backgrounds("bbggSelectionTree",branch_names)
+#preprocessing.set_signals_and_backgrounds("tagsDumper/trees/bbggSelectionTree",branch_names)
 X_bkg,y_bkg,weights_bkg,X_sig,y_sig,weights_sig=preprocessing.set_variables(branch_names)
 
 #relative weighting between components of one class is kept, all classes normalized to the same
+#weights_sig=preprocessing.weight_signal_with_resolution(weights_sig,y_sig)  #!!!! reweight 28112019
 weights_bkg,weights_sig=preprocessing.normalize_process_weights(weights_bkg,y_bkg,weights_sig,y_sig)
 
 X_bkg,y_bkg,weights_bkg = preprocessing.randomize(X_bkg,y_bkg,weights_bkg)
@@ -112,8 +120,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 reload(plt)
 
-#outTag = '2016/dev_legecy_runII_ptmgg_ptmjj_dR/'
-outTag = '2017/dev_legecy_runII_ptmgg_ptmjj_dR/'
+outTag = '2016/WithBTagReweight_v3/'
 joblib.dump(clf, os.path.expanduser(utils.IO.plotFolder+outTag+'simlple_Test_binary_st.pkl'), compress=9)
 
 #plotting.plot_input_variables(X_sig,X_bkg,branch_names)

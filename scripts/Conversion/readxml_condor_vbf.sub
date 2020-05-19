@@ -1,0 +1,44 @@
+#for run need done - condor_submit exercise01.sub  
+#universe = parallel  #the HTCondor "Parallel Universe" is not supported at CERN 
+universe = vanilla
+#The fully qualified name of the executable to be run
+executable = runreadxml_vbf.sh
+#Any arguments that are to be passed to the executable
+arguments = $(ClusterId)$(ProcId)
+#RequestCpus = 8
+#RequestCpus = 30
+# espresso     = 20 minutes  - default!
+# microcentury = 1 hour
+# longlunch    = 2 hours
+# workday      = 8 hours
+# tomorrow     = 1 day
+# testmatch    = 3 days
+# nextweek     = 1 week
+#+JobFlavour = "espresso"
+#+JobFlavour = "tomorrow"
++JobFlavour = "workday"
+#+JobFlavour = "longlunch"
+#By default this the time corresponding to the espresso JobFlavour. The maximum is 1 week, or 604800 seconds.
+#+MaxRuntime = 604800
+#1 days 
+#+MaxRuntime = 86400 
+##2 days 
+#+MaxRuntime = 172800 
+#3 days 
+#+MaxRuntime = 259200 
+#+MaxRuntime = 7200 
+#+MaxRuntime = 21600 
+#Where the STDOUT of the executable is written. This can be a relative or absolute path. HTCondor will not create the directory and hence an error will occur if the specified directory does not exist. 
+output = output/classif.$(ClusterId).$(ProcId).out
+#Where the STDERR of the executable is written. The same rules apply as for output
+error = error/classif.$(ClusterId).$(ProcId).err
+#Where HTCondor writes logging information regarding the job lifecycle (not the job itself). It shows the submission times, execution machine and times, and on termination will shows some statistics
+log = log/classif.$(ClusterId).log
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+transfer_output = True
+#transfer_input_files = trainMVAHHbbgg2016.py
+#+JobFlavour = "espresso"
+#This command submits the job
+queue
+

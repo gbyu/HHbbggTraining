@@ -1,10 +1,14 @@
 void add_branch_res()
 {  
-   TString indirFT = "/afs/cern.ch/work/i/ivovtin/Hggbb/legacy_branch_flattrees/flattrees_2018_withdR/";
-   TString outdirFT = "/afs/cern.ch/work/i/ivovtin/public/legacy_branch_flattrees/rho_rew_2018_v2/";
+   //TString indirFT = "/afs/cern.ch/work/i/ivovtin/Hggbb/legacy_branch_flattrees/flattrees_2018_withdR/";
+   TString indirFT = "/afs/cern.ch/work/i/ivovtin/public/legacy_branch_flattrees/synch/2018/";
+   //TString outdirFT = "/afs/cern.ch/work/i/ivovtin/public/legacy_branch_flattrees/rho_rew_2018_v2/";
+   TString outdirFT = "/afs/cern.ch/work/i/ivovtin/public/legacy_branch_flattrees/synch/2018new/";
    //TString outdirFT = "/eos/user/i/ivovtin/HHggbb/";
    TString indirtrMVA = "/afs/cern.ch/work/i/ivovtin/Hggbb/";
-   TString fnameAll = indirtrMVA + "legacy_branch_flattrees/reduceTree_rho_rew_2018/Total_preselection_diffNaming_transformedMVA.root"; 
+   //TString fnameAll = indirtrMVA + "legacy_branch_flattrees/reduceTree_rho_rew_2018/Total_preselection_diffNaming_transformedMVA.root"; 
+   //TString fnameAll = indirtrMVA + "allTrainReduce/2016/Total_preselection_diffNaming_transformedMVA.root"; 
+   TString fnameAll = indirtrMVA + "allTrainReduce/2018/Total_preselection_diffNaming_transformedMVA.root"; 
 
    //2016
    //TString GJet_Pt1 = "output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8.root";
@@ -38,7 +42,8 @@ void add_branch_res()
    
    //TString fnameSig = indirFT + "output_GluGluToHHTo2B2G_node_SM_13TeV-madgraph.root"; 
    //TString fnameSig = indirFT + "output_GluGluToHHTo2B2G_allnodes.root"; 
-   TString fnameSig = indirFT + "output_GluGluToHHTo2B2G_allnodes_2018_no_unit_norm.root"; 
+   //TString fnameSig = indirFT + "output_GluGluToHHTo2B2G_allnodes_2018_no_unit_norm.root"; 
+   TString fnameSig = indirFT + "output_GluGluToHHTo2B2G_allnodes_no_unit_norm.root"; 
    TString fnamedata = indirFT + "Data.root"; 
    //bkg
    TString fname0 = indirFT + "output_DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa.root"; 

@@ -11,12 +11,12 @@ import postprocessing_utils as postprocessing
 reload(postprocessing)
 from IPython import get_ipython
 
-ntuples = 'legacy_branch_flattrees/flattrees_legacy_cuts_2018'
+ntuples = 'WithBTagReweight/withcuts/flattrees_legacy_cuts_2018'
 # "%" sign allows to interpret the rest as a system command
 get_ipython().magic(u'env data=$utils.IO.ldata$ntuples')
 files = get_ipython().getoutput(u'ls $data | sort -t_ -k 3 -n')
 #signal = [s for s in files if "output_GluGluToHHTo2B2G_node_SM_13TeV-madgraph.root" in s]
-signal = [s for s in files if "output_GluGluToHHTo2B2G_allnodes_2018_no_unit_norm.root" in s]
+signal = [s for s in files if "output_GluGluToHHTo2B2G_allnodes_no_unit_norm.root" in s]
 diphotonJets = [s for s in files if "output_DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa.root" in s]
 #2016
 #gJets_lowPt = [s for s in files if "output_GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8.root" in s]
@@ -57,6 +57,7 @@ for i in range(len(utils.IO.backgroundName)):
     print list_trees(utils.IO.backgroundName[i])
         
 preprocessing.set_signals_and_backgrounds("bbggSelectionTree",branch_names)
+#preprocessing.set_signals_and_backgrounds("tagsDumper/trees/bbggSelectionTree",branch_names)
 X_bkg,y_bkg,weights_bkg,X_sig,y_sig,weights_sig=preprocessing.set_variables(branch_names)
 
 #relative weighting between components of one class is kept, all classes normalized to the same
@@ -118,8 +119,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 reload(plt)
 
-#outTag = '2018/dev_legecy_runII_Mjj_woMjjcut_v2/'
-outTag = '2018/dev_legecy_runII_ext_rho_rew_v3/'
+outTag = '2018/WithBTagReweight_v3/'
 joblib.dump(clf, os.path.expanduser(utils.IO.plotFolder+outTag+'simlple_Test_binary_st.pkl'), compress=9)
 
 #plotting.plot_input_variables(X_sig,X_bkg,branch_names)

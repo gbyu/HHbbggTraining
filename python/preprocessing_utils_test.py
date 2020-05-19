@@ -11,27 +11,13 @@ def define_process_weight(df,proc,name,cleanSignal=True):
     df['weight'] = ( np.ones_like(df.index)).astype(np.float32)
     ##input_df=rpd.read_root(name,"bbggSelectionTree", columns = ['weight'])
     #input_df=rpd.read_root(name,"bbggSelectionTree", columns = ['weight','lumi','puweight','centralObjectWeight','benchmark_reweight_SM'])
-    #
     input_df=rpd.read_root(name,"bbggSelectionTree", columns = ['weight','lumi','puweight','centralObjectWeight'])
     w = np.multiply(input_df[['centralObjectWeight']],input_df[['weight']])
     w = np.multiply(w,input_df[['lumi']])
     w = np.multiply(w,input_df[['puweight']])
     #w = np.multiply(w,input_df[['benchmark_reweight_SM']])
-    w = np.multiply(1,input_df[['weight']])
+    ###w = np.multiply(1,input_df[['weight']])
     df['weight']=w
-    print name
-    for i in range(utils.IO.nSig):
-        print utils.IO.signalName[i]
-        if name==utils.IO.signalName[i]:
-            #input_df=rpd.read_root(utils.IO.signalName[i],"bbggSelectionTree", columns = ['benchmark_reweight_SM'])
-            #w = np.multiply(w,input_df[['benchmark_reweight_SM']])
-            #w = np.multiply(w,41.5/8.27769036)  #2017 SM
-            #w = np.multiply(w,35.9/62.57257893)  #2016 SM
-            #w = np.multiply(w,59.4/8.360941357)   #2018 SM
-            w = np.divide(w,utils.IO.signal_df[i][['sigmaMOverM']])
-            #print input_df[['benchmark_reweight_SM']]  
-            df['weight']=w 
-
 
 def clean_signal_events(x_b, y_b, w_b,x_s,y_s,w_s):#some trees include also the control region,select only good events
     return x_b[np.where(w_b!=0),:][0],y_b[np.where(w_b!=0)],w_b[np.where(w_b!=0)], x_s[np.where(w_s!=0),:][0], np.asarray(y_s)[np.where(w_s!=0)],np.asarray(w_s)[np.where(w_s!=0)]
@@ -86,10 +72,14 @@ def weight_signal_with_resolution(w_s,y_s):
          input_df=rpd.read_root(utils.IO.signalName[i],"bbggSelectionTree", columns = ['benchmark_reweight_SM'])
          #input_df=rpd.read_root(utils.IO.signalName[i],"bbggSelectionTree", columns = ['benchmark_reweight_2017fake'])
          utils.IO.signal_df[i][['weight']] = np.multiply(utils.IO.signal_df[i][['weight']],input_df[['benchmark_reweight_SM']])
+         #utils.IO.signal_df[i][['weight']] = np.multiply(utils.IO.signal_df[i][['weight']],input_df[['benchmark_reweight_2017fake']])
+         #utils.IO.signal_df[i][['weight']] = np.multiply(utils.IO.signal_df[i][['weight']],41.5/7.465844482)  #2017 fake data
          #utils.IO.signal_df[i][['weight']] = np.multiply(utils.IO.signal_df[i][['weight']],41.5/7.666672541)  #2017 SM
          #utils.IO.signal_df[i][['weight']] = np.multiply(utils.IO.signal_df[i][['weight']],35.9/57.32398753)   #2016 SM
          utils.IO.signal_df[i][['weight']] = np.multiply(utils.IO.signal_df[i][['weight']],59.4/7.719390612)   #2018 SM
 	 utils.IO.signal_df[i][['weight']] = np.divide(utils.IO.signal_df[i][['weight']],utils.IO.signal_df[i][['sigmaMOverM']])
+         #print input_df[['benchmark_reweight_SM']]  
+         #print input_df[['benchmark_reweight_8']]  
 
     return utils.IO.signal_df[i][['weight']]
 
